@@ -25,5 +25,6 @@ void DestroyBody(B2D *body)
     {
         body->world->bits[body->index] = 0;
         free((void*)body);
+        body = NULL;
     }
 }

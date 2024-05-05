@@ -13,6 +13,7 @@ int main(int argc, char *argv[])
     DestroyBody(body);
 
     QQmlApplicationEngine engine;
+    QObject::connect(NULL, NULL, NULL, NULL);
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     engine.load(url);
 

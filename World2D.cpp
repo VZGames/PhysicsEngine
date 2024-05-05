@@ -19,6 +19,7 @@ void DestroyWorld(W2D *world)
     {
         free(world->bits);
         free(world);
+        world = NULL;
     }
 }
 
