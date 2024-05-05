@@ -3,6 +3,7 @@
 
 #include "Math/Vector2D.h"
 #include "Math/Shape2D.h"
+#include "World2D.h"
 
 typedef enum e_body_type
 {
@@ -13,6 +14,8 @@ typedef enum e_body_type
 
 typedef struct body_2d_define
 {
+    int index;
+    W2D* world;
     Vec2 position;
     Vec2 linearVelocity;
 
@@ -21,9 +24,13 @@ typedef struct body_2d_define
 
     BodyType type;
     ShapeType shape;
+
     float mass;
     float density;
+    float restitution;
+} B2D;
 
-} BodyDef;
+B2D* CreateBody(W2D* world);
+void DestroyBody(B2D* body);
 
 #endif // BODY2D_H
