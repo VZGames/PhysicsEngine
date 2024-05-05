@@ -15,4 +15,12 @@ typedef struct circle
     Vec2 center;
 } Circle;
 
+typedef struct ellipse
+{
+    float a;
+    float b;
+    Vec2 center;
+} Ellipse;
+
+
 #endif // SHAPE2D_H

@@ -3,7 +3,7 @@
 
 #include <math.h>
 
-typedef struct vector_2d
+typedef struct point
 {
     float x;
     float y;
