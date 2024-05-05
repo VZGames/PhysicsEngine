@@ -1,4 +1,6 @@
 #include "Body2D.h"
+#include <stdio.h>
+#include <cstdlib>
 
 B2D *CreateBody(W2D *w)
 {
@@ -11,16 +13,17 @@ B2D *CreateBody(W2D *w)
             body = (B2D*)w->bodies[i];
             body->index = i;
             body->world = w;
+            break;
         }
     }
     return body;
 }
 
-void DestroyBody(B2D *b)
+void DestroyBody(B2D *body)
 {
-    if (b != NULL)
+    if (body != NULL)
     {
-        b->world->OnBodyDestruction(b);
-        free(b);
+        body->world->bits[body->index] = 0;
+        free((void*)body);
     }
 }
