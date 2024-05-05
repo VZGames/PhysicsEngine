@@ -3,6 +3,13 @@
 
 #include "Vector2D.h"
 
+typedef enum e_shape_type
+{
+    POLYGON,
+    CIRCLE,
+    CAPSULE
+} ShapeType;
+
 typedef struct polygon
 {
     Vec2* points;
