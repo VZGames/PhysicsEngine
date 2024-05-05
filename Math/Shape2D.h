@@ -28,4 +28,5 @@ typedef struct capsule
     float height;
     float radius;
 } Capsule;
+
 #endif // SHAPE2D_H

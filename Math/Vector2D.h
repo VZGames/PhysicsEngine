@@ -39,6 +39,11 @@ float dot_product(Vec2 A, Vec2 B) // scalar
     return (A.x * B.x + A.y * B.y);
 }
 
+float cross_product(Vec2 A, Vec2 B)
+{
+    return (A.x * B.y - A.y * B.x);
+}
+
 float magnitude(Vec2 vec)
 {
     return sqrtf(vec.x * vec.x + vec.y * vec.y);

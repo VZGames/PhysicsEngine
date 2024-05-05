@@ -10,31 +10,34 @@ typedef struct matrix_2d
     void* data;
 } Mat2;
 
-Mat2 create_matrix2d(size_t w, size_t h)
+void create_matrix2d(Mat2* m, size_t w, size_t h)
 {
-    return (Mat2) {w, h, malloc(w * h * sizeof(void*))};
+    m->w = w;
+    m->h = h;
+    m->data = malloc(w * h * sizeof(void*));
 }
 
-void release_matrix2d(Mat2* matrix)
+void release_matrix2d(Mat2* m)
 {
-    free(matrix);
+    free(m);
 }
 
-int index_at(Mat2* matrix, unsigned int x, unsigned int y)
+int index_at(Mat2* m, unsigned int x, unsigned int y)
 {
-    if (matrix == NULL) return -1;
-    if (matrix->w > x && matrix->h > y)
+    if (m == NULL) return -1;
+    if (m->w > x && m->h > y)
     {
-        return ((matrix->w * y) + x);
+        return ((m->w * y) + x);
     }
     return -1;
 }
 
-void* item_at(Mat2* matrix, unsigned int x, unsigned int y)
+void* item_at(Mat2* m, unsigned int x, unsigned int y)
 {
-    if (matrix != NULL && (matrix->w > x && matrix->h > y))
+    int index = index_at(m, x, y);
+    if (index > -1)
     {
-        return (matrix + index_at(matrix, x, y));
+        return (m + index);
     }
     return NULL;
 }
