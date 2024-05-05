@@ -32,8 +32,7 @@ int index_at(Mat2* matrix, unsigned int x, unsigned int y)
 
 void* item_at(Mat2* matrix, unsigned int x, unsigned int y)
 {
-    if (matrix == NULL) return NULL;
-    if (matrix->w > x && matrix->h > y)
+    if (matrix != NULL && (matrix->w > x && matrix->h > y))
     {
         return (matrix + index_at(matrix, x, y));
     }

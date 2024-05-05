@@ -11,16 +11,21 @@ typedef struct polygon
 
 typedef struct circle
 {
-    float radius;
     Vec2 center;
+    float radius;
 } Circle;
 
 typedef struct ellipse
 {
+    Vec2 center;
     float a;
     float b;
-    Vec2 center;
 } Ellipse;
 
-
+typedef struct capsule
+{
+    Vec2 center;
+    float height;
+    float radius;
+} Capsule;
 #endif // SHAPE2D_H
