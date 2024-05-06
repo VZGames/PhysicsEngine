@@ -7,6 +7,7 @@ typedef enum e_shape_type
 {
     POLYGON,
     CIRCLE,
+    ELLIPSE,
     CAPSULE
 } ShapeType;
 

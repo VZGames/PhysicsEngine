@@ -8,8 +8,10 @@ W2D *CreateWorld(float g, float w, float h)
     world->gravity = g;
     world->w = w;
     world->h = h;
-    world->bits = (bool*)calloc(MAX_BODY, sizeof(bool));
+    world->body_bitset = (bool*)calloc(MAX_BODY, sizeof(bool));
+    world->shape_bitset = (bool*)calloc(MAX_SHAPE, sizeof(bool));
     memset(&world->bodies[0], 0, sizeof(void*));
+    memset(&world->shapes[0], 0, sizeof(void*));
     return world;
 }
 
@@ -17,7 +19,8 @@ void DestroyWorld(W2D *world)
 {
     if (world != NULL)
     {
-        free(world->bits);
+        free(world->shape_bitset);
+        free(world->body_bitset);
         free(world);
         world = NULL;
     }

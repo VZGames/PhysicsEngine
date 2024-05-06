@@ -2,14 +2,17 @@
 #define WORLD2D_H
 
 #define MAX_BODY 255
+#define MAX_SHAPE 1024
 
 typedef struct world_2d_define
 {
     float gravity;
     float w;
     float h;
-    bool* bits;
+    bool* body_bitset;
+    bool* shape_bitset;
     void* bodies[MAX_BODY];
+    void* shapes[MAX_SHAPE];
 } W2D;
 
 W2D *CreateWorld(float g, float w, float h);

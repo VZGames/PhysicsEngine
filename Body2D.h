@@ -22,14 +22,15 @@ typedef struct body_2d_define
     float rotationVelocity;
 
     BodyType type;
-    ShapeType shape;
+    ShapeID* shapes;
 
     float mass;
     float density;
     float restitution;
 } B2D;
 
-BodyID CreateBody(W2D* world);
+BodyID CreateBody(W2D* world, B2D* define);
+ShapeID CreateShape(BodyID body, ShapeType type, void* define);
 void DestroyBody(BodyID id);
 
 #endif // BODY2D_H

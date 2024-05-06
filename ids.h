@@ -7,6 +7,10 @@ typedef struct body_id
     void* world;
 } BodyID;
 
-
+typedef struct shape_id
+{
+    int index;
+    int body;
+} ShapeID;
 
 #endif // IDS_H

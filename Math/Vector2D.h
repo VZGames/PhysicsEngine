@@ -29,4 +29,6 @@ inline float distance(Vec2 A, Vec2 B){float x = (B.x - A.x);float y = (B.y - A.y
 
 inline Vec2 normalize(Vec2 vec){float len = magnitude(vec);return (Vec2) { vec.x / len, vec.y / len };}
 
+inline bool equal(Vec2 A, Vec2 B) { return (A.x == B.x && A.y == B.y); }
+
 #endif // VECTOR2D_H
