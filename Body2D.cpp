@@ -1,6 +1,7 @@
 #include "Body2D.h"
 #include <stdio.h>
 #include <cstdlib>
+#include <Math/Shape2D.h>
 
 BodyID CreateBody(W2D *w, B2D* define)
 {
@@ -9,8 +10,8 @@ BodyID CreateBody(W2D *w, B2D* define)
         if (w->body_bitset[i] == 0)
         {
             w->body_bitset[i] = 1;
-            w->bodies[i] = malloc(sizeof(B2D));
-            B2D* body = (B2D*)w->bodies[i];
+            B2D* body = (B2D*)malloc(sizeof(B2D));
+
             body->position                  = define->position;
             body->density                   = define->density;
             body->linearVelocity            = define->linearVelocity;
@@ -20,6 +21,8 @@ BodyID CreateBody(W2D *w, B2D* define)
             body->mass                      = define->mass;
             body->shapes                    = define->shapes;
             body->type                      = define->type;
+
+            w->bodies[i] = body;
             break;
         }
     }
@@ -35,35 +38,6 @@ void DestroyBody(BodyID id)
 
 ShapeID CreateShape(BodyID body, ShapeType type, void* data)
 {
-    switch (type) {
-    case ShapeType::POLYGON:
-    {
-        Polygon* poly = (Polygon*)data;
-        (void)poly;
-        break;
-    }
-    case ShapeType::CIRCLE:
-    {
-        Circle* circle = (Circle*)data;
-        (void)circle;
-        break;
-    }
-    case ShapeType::ELLIPSE:
-    {
-        Ellipse* elip = (Ellipse*)data;
-        (void)elip;
-        break;
-    }
-    case ShapeType::CAPSULE:
-    {
-        Capsule* capsule = (Capsule*)data;
-        (void)capsule;
-        break;
-    }
-    default:
-        break;
-    }
-
     W2D* world = (W2D*)body.world;
 
     int i;
@@ -76,5 +50,43 @@ ShapeID CreateShape(BodyID body, ShapeType type, void* data)
         }
     }
 
+    switch (type) {
+    case ShapeType::POLYGON:
+    {
+        Polygon* define = (Polygon*)data;
+        Polygon* shape  = (Polygon*)world->shapes[i];
+        shape->count    = define->count;
+        shape->points   = define->points;
+        break;
+    }
+    case ShapeType::CIRCLE:
+    {
+        Circle* define  = (Circle*)data;
+        Circle* shape   = (Circle*)world->shapes[i];
+        shape->center   = define->center;
+        shape->radius   = define->radius;
+        break;
+    }
+    case ShapeType::ELLIPSE:
+    {
+        Ellipse* define = (Ellipse*)data;
+        Ellipse* shape  = (Ellipse*)world->shapes[i];
+        shape->a        = define->a;
+        shape->b        = define->b;
+        shape->center   = define->center;
+        break;
+    }
+    case ShapeType::CAPSULE:
+    {
+        Capsule* define = (Capsule*)data;
+        Capsule* shape  = (Capsule*)world->shapes[i];
+        shape->center   = define->center;
+        shape->height   = define->height;
+        shape->radius   = define->radius;
+        break;
+    }
+    default:
+        break;
+    }
     return (ShapeID) {i, body.index};
 }
