@@ -7,19 +7,19 @@
 typedef struct world_2d_define
 {
     float gravity;
-    float w;
-    float h;
+    unsigned char w;
+    unsigned char h;
     bool* bodyBitset;
     bool* shapeBitset;
     void* bodies[MAX_BODY];
     void* shapes[MAX_SHAPE];
 } W2D;
 
-W2D *CreateWorld(float g, float w, float h);
+W2D *CreateWorld(float g, unsigned char w, unsigned char h);
 void DestroyWorld(W2D* world);
 
 void Update(W2D* world, float deltatime, int totalIterations);
-void BroadPhase();
-void NarrowPhase();
+void BroadPhase(W2D* world);
+void NarrowPhase(W2D* world);
 
 #endif // WORLD2D_H

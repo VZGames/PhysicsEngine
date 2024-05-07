@@ -12,20 +12,28 @@ int main(int argc, char *argv[])
 
     W2D* world = CreateWorld(9.8f, 5.0f, 3.0f);
 
-    B2D body;
-    body.type = STATIC_TYPE;
-    body.density = 1.0f;
-    body.mass = 1.0f;
-    body.restitution = 0.3f;
-    body.position = (Vec2) {30, 50};
+    B2D bodyA;
+    bodyA.type = STATIC_TYPE;
+    bodyA.density = 1.0f;
+    bodyA.mass = 1.0f;
+    bodyA.restitution = 0.3f;
+    bodyA.position = (Vec2) {30, 50};
+
+    B2D bodyB;
+    bodyB.type = STATIC_TYPE;
+    bodyB.density = 1.0f;
+    bodyB.mass = 1.0f;
+    bodyB.restitution = 0.3f;
+    bodyB.position = (Vec2) {30, 50};
 
     Circle circle;
     circle.center = (Vec2) {0.0f, 0.0f};
     circle.radius = 1.0f;
 
-    BID id = CreateBody(world, &body);
-    SID shapeA = CreateShape(world, id, CIRCLE, &circle);
-    SID shapeB = CreateShape(world, id, CIRCLE, &circle);
+    BID Aid = CreateBody(world, &bodyA);
+    BID Bid = CreateBody(world, &bodyB);
+    SID shapeA = CreateShape(world, Aid, CIRCLE, &circle);
+    SID shapeB = CreateShape(world, Bid, CIRCLE, &circle);
 
     qDebug("Shape Id index: %d, body: %p", shapeA.index, shapeA.world);
     qDebug("Shape Id index: %d, body: %p", shapeB.index, shapeB.world);

@@ -3,7 +3,7 @@
 #include <string.h>
 #include "Math/Matrix2D.h"
 
-W2D *CreateWorld(float g, float w, float h)
+W2D *CreateWorld(float g, unsigned char w, unsigned char h)
 {
     W2D* world = (W2D*)malloc(sizeof(W2D));
     world->gravity = g;
@@ -33,17 +33,19 @@ void Update(W2D *world, float deltatime, int totalIterations)
     (void)deltatime;
     (void)totalIterations;
     for (int i = 0; i < totalIterations; ++i) {
-        BroadPhase();
-        NarrowPhase();
+        BroadPhase(world);
+        NarrowPhase(world);
     }
 }
 
-void BroadPhase()
+void BroadPhase(W2D* world)
 {
+    for (unsigned char i = 0; i < (world->h * world->w); ++i) {
 
+    }
 }
 
-void NarrowPhase()
+void NarrowPhase(W2D* world)
 {
 
 }
