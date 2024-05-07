@@ -5,12 +5,12 @@ typedef struct body_id
 {
     int index;
     void* world;
-} BodyID;
+} BID;
 
 typedef struct shape_id
 {
     int index;
-    int body;
-} ShapeID;
+    void* world;
+} SID;
 
 #endif // IDS_H

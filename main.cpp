@@ -19,7 +19,16 @@ int main(int argc, char *argv[])
     body.restitution = 0.3f;
     body.position = (Vec2) {30, 50};
 
-    BodyID id = CreateBody(world, &body);
+    Circle circle;
+    circle.center = (Vec2) {0.0f, 0.0f};
+    circle.radius = 1.0f;
+
+    BID id = CreateBody(world, &body);
+    SID shapeA = CreateShape(world, id, CIRCLE, &circle);
+    SID shapeB = CreateShape(world, id, CIRCLE, &circle);
+
+    qDebug("Shape Id index: %d, body: %p", shapeA.index, shapeA.world);
+    qDebug("Shape Id index: %d, body: %p", shapeB.index, shapeB.world);
 
     QTimer timer;
     timer.setInterval(FPS/1000);

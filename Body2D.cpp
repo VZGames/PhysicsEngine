@@ -3,13 +3,13 @@
 #include <cstdlib>
 #include <Math/Shape2D.h>
 
-BodyID CreateBody(W2D *w, B2D* define)
+BID CreateBody(W2D *w, B2D* define)
 {
     int i;
     for (i = 0; i < MAX_BODY; ++i) {
-        if (w->body_bitset[i] == 0)
+        if (w->bodyBitset[i] == 0)
         {
-            w->body_bitset[i] = 1;
+            w->bodyBitset[i] = 1;
             B2D* body = (B2D*)malloc(sizeof(B2D));
 
             body->position                  = define->position;
@@ -19,32 +19,22 @@ BodyID CreateBody(W2D *w, B2D* define)
             body->rotation                  = define->rotation;
             body->restitution               = define->restitution;
             body->mass                      = define->mass;
-            body->shapes                    = define->shapes;
             body->type                      = define->type;
-
+            body->shapeId                   = define->shapeId;
             w->bodies[i] = body;
             break;
         }
     }
-    return (BodyID) {i, w};
+    return (BID) {i, w};
 }
 
-void DestroyBody(BodyID id)
+SID CreateShape(W2D* world, BID target, ShapeType type, void* data)
 {
-    W2D* world = (W2D*)id.world;
-    world->body_bitset[id.index] = 0;
-    free((void*)world->bodies[id.index]);
-}
-
-ShapeID CreateShape(BodyID body, ShapeType type, void* data)
-{
-    W2D* world = (W2D*)body.world;
-
     int i;
     for (i = 0; i < MAX_SHAPE; ++i) {
-        if (world->shape_bitset[i] == 0)
+        if (world->shapeBitset[i] == 0)
         {
-            world->shape_bitset[i] = 1;
+            world->shapeBitset[i] = 1;
             world->shapes[i] = malloc(sizeof(B2D));
             break;
         }
@@ -88,5 +78,22 @@ ShapeID CreateShape(BodyID body, ShapeType type, void* data)
     default:
         break;
     }
-    return (ShapeID) {i, body.index};
+
+    B2D* body = (B2D*)world->bodies[target.index];
+    body->shapeId = (SID) {i, world};
+    return body->shapeId;
+}
+
+void DestroyBody(BID id)
+{
+    W2D* world = (W2D*)id.world;
+    world->bodyBitset[id.index] = 0;
+    free((void*)world->bodies[id.index]);
+}
+
+void DestroyShape(SID id)
+{
+    W2D* world = (W2D*)id.world;
+    world->shapeBitset[id.index] = 0;
+    free((void*)world->shapes[id.index]);
 }

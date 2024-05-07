@@ -9,8 +9,8 @@ typedef struct world_2d_define
     float gravity;
     float w;
     float h;
-    bool* body_bitset;
-    bool* shape_bitset;
+    bool* bodyBitset;
+    bool* shapeBitset;
     void* bodies[MAX_BODY];
     void* shapes[MAX_SHAPE];
 } W2D;
