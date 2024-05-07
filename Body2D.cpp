@@ -5,8 +5,7 @@
 
 BID CreateBody(W2D *w, B2D* define)
 {
-    int i;
-    for (i = 0; i < MAX_BODY; ++i) {
+    for (int i = 0; i < MAX_BODY; ++i) {
         if (w->bodyBitset[i] == 0)
         {
             w->bodyBitset[i] = 1;
@@ -22,66 +21,67 @@ BID CreateBody(W2D *w, B2D* define)
             body->type                      = define->type;
             body->shapeId                   = define->shapeId;
             w->bodies[i] = body;
-            break;
+            return (BID) {i, w};
         }
     }
-    return (BID) {i, w};
+    return (BID) {-1, NULL};
 }
 
 SID CreateShape(W2D* world, BID target, ShapeType type, void* data)
 {
-    int i;
-    for (i = 0; i < MAX_SHAPE; ++i) {
+    for (int i = 0; i < MAX_SHAPE; ++i) {
         if (world->shapeBitset[i] == 0)
         {
             world->shapeBitset[i] = 1;
             world->shapes[i] = malloc(sizeof(B2D));
-            break;
+
+            B2D* body = (B2D*)world->bodies[target.index];
+            body->shapeId = (SID) {i, world};
+
+            switch (type) {
+            case ShapeType::POLYGON:
+            {
+                Polygon* define = (Polygon*)data;
+                Polygon* shape  = (Polygon*)world->shapes[i];
+                shape->count    = define->count;
+                shape->points   = define->points;
+                break;
+            }
+            case ShapeType::CIRCLE:
+            {
+                Circle* define  = (Circle*)data;
+                Circle* shape   = (Circle*)world->shapes[i];
+                shape->center   = define->center;
+                shape->radius   = define->radius;
+                break;
+            }
+            case ShapeType::ELLIPSE:
+            {
+                Ellipse* define = (Ellipse*)data;
+                Ellipse* shape  = (Ellipse*)world->shapes[i];
+                shape->a        = define->a;
+                shape->b        = define->b;
+                shape->center   = define->center;
+                break;
+            }
+            case ShapeType::CAPSULE:
+            {
+                Capsule* define = (Capsule*)data;
+                Capsule* shape  = (Capsule*)world->shapes[i];
+                shape->center   = define->center;
+                shape->height   = define->height;
+                shape->radius   = define->radius;
+                break;
+            }
+            default:
+                break;
+            }
+
+            return body->shapeId;
         }
     }
+    return (SID) {-1, NULL};
 
-    switch (type) {
-    case ShapeType::POLYGON:
-    {
-        Polygon* define = (Polygon*)data;
-        Polygon* shape  = (Polygon*)world->shapes[i];
-        shape->count    = define->count;
-        shape->points   = define->points;
-        break;
-    }
-    case ShapeType::CIRCLE:
-    {
-        Circle* define  = (Circle*)data;
-        Circle* shape   = (Circle*)world->shapes[i];
-        shape->center   = define->center;
-        shape->radius   = define->radius;
-        break;
-    }
-    case ShapeType::ELLIPSE:
-    {
-        Ellipse* define = (Ellipse*)data;
-        Ellipse* shape  = (Ellipse*)world->shapes[i];
-        shape->a        = define->a;
-        shape->b        = define->b;
-        shape->center   = define->center;
-        break;
-    }
-    case ShapeType::CAPSULE:
-    {
-        Capsule* define = (Capsule*)data;
-        Capsule* shape  = (Capsule*)world->shapes[i];
-        shape->center   = define->center;
-        shape->height   = define->height;
-        shape->radius   = define->radius;
-        break;
-    }
-    default:
-        break;
-    }
-
-    B2D* body = (B2D*)world->bodies[target.index];
-    body->shapeId = (SID) {i, world};
-    return body->shapeId;
 }
 
 void DestroyBody(BID id)

@@ -35,8 +35,10 @@ int main(int argc, char *argv[])
     SID shapeA = CreateShape(world, Aid, CIRCLE, &circle);
     SID shapeB = CreateShape(world, Bid, CIRCLE, &circle);
 
-    qDebug("Shape Id index: %d, body: %p", shapeA.index, shapeA.world);
-    qDebug("Shape Id index: %d, body: %p", shapeB.index, shapeB.world);
+    qDebug("Body Id index: %d, world: %p", Aid.index, Aid.world);
+    qDebug("Shape Id index: %d, world: %p", shapeA.index, shapeA.world);
+    qDebug("Body Id index: %d, world: %p", Bid.index, Bid.world);
+    qDebug("Shape Id index: %d, world: %p", shapeB.index, shapeB.world);
 
     QTimer timer;
     timer.setInterval(FPS/1000);
