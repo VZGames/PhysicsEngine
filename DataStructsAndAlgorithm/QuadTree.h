@@ -3,7 +3,7 @@
 
 typedef struct quad_tree_entity
 {
-    void* object;
+    void* entities;
 } QuadTreeEntity;
 
 typedef struct quad_tree_node

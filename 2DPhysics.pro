@@ -28,6 +28,7 @@ HEADERS += \
     DataStructsAndAlgorithm/QuadTree.h \
     Math/Matrix2D.h \
     Math/Shape2D.h \
+    Math/Transform2D.h \
     Math/Vector2D.h \
     Body2D.h \
     Utils.h \

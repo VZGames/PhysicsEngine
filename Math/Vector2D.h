@@ -2,12 +2,15 @@
 #define VECTOR2D_H
 
 #include <math.h>
+#include "Transform2D.h"
 
 typedef struct point
 {
     float x;
     float y;
 } Vec2;
+
+inline Vec2 zero() { return (Vec2){0.0f, 0.0f}; }
 
 inline Vec2 plus(Vec2 A, Vec2 B){return (Vec2){ A.x + B.x, A.y + B.y };}
 
@@ -29,6 +32,19 @@ inline float distance(Vec2 A, Vec2 B){float x = (B.x - A.x);float y = (B.y - A.y
 
 inline Vec2 normalize(Vec2 vec){float len = magnitude(vec);return (Vec2) { vec.x / len, vec.y / len };}
 
-inline bool equal(Vec2 A, Vec2 B) { return (A.x == B.x && A.y == B.y); }
+inline bool equals(Vec2 A, Vec2 B) { return (A.x == B.x && A.y == B.y); }
+
+inline Vec2 transform(Vec2 vec, Trans2D transform)
+{
+    /**
+     * x2=cosβx1−sinβy1
+     * y2=sinβx1+cosβy1
+    `*/
+
+    return (Vec2) {
+        (transform.cos * vec.x - transform.sin * vec.y) + transform.x,
+        (transform.sin * vec.x + transform.cos * vec.y) + transform.y
+    };
+}
 
 #endif // VECTOR2D_H
