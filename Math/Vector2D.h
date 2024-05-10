@@ -28,9 +28,9 @@ inline float cross_product(Vec2 A, Vec2 B){return (A.x * B.y - A.y * B.x);}
 
 inline float magnitude(Vec2 vec){return sqrtf(vec.x * vec.x + vec.y * vec.y);}
 
-inline float distance(Vec2 A, Vec2 B){float x = (B.x - A.x);float y = (B.y - A.y);return sqrtf(x * x + y * y);}
+inline float distance(Vec2 A, Vec2 B){ return sqrtf((B.x - A.x) * (B.x - A.x) + (B.y - A.y) * (B.y - A.y));}
 
-inline Vec2 normalize(Vec2 vec){float len = magnitude(vec);return (Vec2) { vec.x / len, vec.y / len };}
+inline Vec2 normalize(Vec2 vec){return (Vec2) { vec.x / magnitude(vec), vec.y / magnitude(vec) };}
 
 inline bool equals(Vec2 A, Vec2 B) { return (A.x == B.x && A.y == B.y); }
 
