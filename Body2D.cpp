@@ -97,3 +97,20 @@ void DestroyShape(SID id)
     world->shapeBitset[id.index] = 0;
     free((void*)world->shapes[id.index]);
 }
+
+Trans2D GetTransform(BID target)
+{
+    W2D* world          = (W2D*)target.world;
+    B2D* body           = (B2D*)world->bodies[target.index];
+    return body->transform;
+}
+
+void SetTransform(BID target, float x, float y, float angle)
+{
+    W2D* world          = (W2D*)target.world;
+    B2D* body           = (B2D*)world->bodies[target.index];
+    body->transform.x   = x;
+    body->transform.y   = y;
+    body->transform.cos = cos(angle);
+    body->transform.sin = sin(angle);
+}
