@@ -1,6 +1,7 @@
 #ifndef SHAPE2D_H
 #define SHAPE2D_H
 
+#include <stdint.h>
 #include "Vector2D.h"
 #define PI 3.14f
 
@@ -38,7 +39,7 @@ typedef struct capsule
     float radius;
 } Capsule;
 
-float area(ShapeType type, void* define)
+inline float area(ShapeType type, void* define)
 {
     switch (type) {
     case CIRCLE:
@@ -60,6 +61,17 @@ float area(ShapeType type, void* define)
     }
     case POLYGON:
     {
+        Polygon* poly = (Polygon*)define;
+        Vec2 G {0.0f, 0.0f};
+        for (int i = 0; i < static_cast<size_t>(poly->count); ++i) {
+            G.x += poly->points[i].x;
+            G.y += poly->points[i].y;
+        }
+        G.x /= 2.0f;
+        G.y /= 2.0f;
+
+
+
         break;
     }
     default:
