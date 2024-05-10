@@ -37,6 +37,7 @@ inline bool equals(Vec2 A, Vec2 B) { return (A.x == B.x && A.y == B.y); }
 inline Vec2 transform(Vec2 vec, Trans2D transform)
 {
     /**
+     * Formula for rotating a vector in 2D
      * x2=cosβx1−sinβy1
      * y2=sinβx1+cosβy1
     `*/
