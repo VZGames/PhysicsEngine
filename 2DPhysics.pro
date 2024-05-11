@@ -24,8 +24,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    DataStructsAndAlgorithm/AABB.h \
-    DataStructsAndAlgorithm/QuadTree.h \
+    DataStructs/AABB.h \
+    DataStructs/QuadTree.h \
     Math/Matrix2D.h \
     Math/Shape2D.h \
     Math/Transform2D.h \

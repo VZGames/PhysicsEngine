@@ -1,22 +1,34 @@
-#ifndef UTILS_H
-#define UTILS_H
+#ifndef UTILS__H
+#define UTILS__H
 
 #include <time.h>
 #include <stdlib.h>
 
-int randInt(int max)
+inline float absf(float v)
+{
+    v *= (v > 0? 1.0f:-1.0f);
+    return v;
+}
+
+inline int absi(int v)
+{
+    v *= (v > 0? 1:-1);
+    return v;
+}
+
+inline int randInt(int max)
 {
     srand(time(NULL));
     return rand() % (max + 1);
 }
-float rantReal(float max)
+inline float rantReal(float max)
 {
     return (float)rand()/(float)(RAND_MAX/max);
 }
 
-bool randBit()
+inline bool randBit()
 {
     return (bool)(rand() % (1));
 }
 
-#endif // UTILS_H
+#endif // UTILS__H

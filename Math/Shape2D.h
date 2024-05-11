@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include "Vector2D.h"
+#include "Utils.h"
 #define PI 3.14f
 
 typedef enum e_shape_type
@@ -41,42 +42,43 @@ typedef struct capsule
 
 inline float area(ShapeType type, void* define)
 {
+    float area = 0.0f;
     switch (type) {
     case CIRCLE:
     {
         Circle* circle = (Circle*)define;
-        return (PI * (circle->radius * circle->radius));
+        area = (PI * (circle->radius * circle->radius));
+        break;
     }
     case ELLIPSE:
     {
         Ellipse* ellipse = (Ellipse*)define;
-        return (PI * (ellipse->a * ellipse->b));
+        area = (PI * (ellipse->a * ellipse->b));
+        break;
     }
     case CAPSULE:
     {
         Capsule* capsule = (Capsule*)define;
         float circle_area = (PI * (capsule->radius * capsule->radius));
         float rectangle_area = (2 * capsule->radius) * (2 * capsule->radius) * (capsule->height - 1);
-        return circle_area + rectangle_area;
+        area = circle_area + rectangle_area;
+        break;
     }
     case POLYGON:
     {
         Polygon* poly = (Polygon*)define;
-        Vec2 G {0.0f, 0.0f};
-        for (int i = 0; i < static_cast<size_t>(poly->count); ++i) {
-            G.x += poly->points[i].x;
-            G.y += poly->points[i].y;
+        int j = (int)(poly->count) - 1;
+        for (int i = 0; i < (int)(poly->count); ++i) {
+            area += (poly->points[i].x + poly->points[j].x) * (poly->points[i].y + poly->points[j].y);
+            j = i;
         }
-        G.x /= 2.0f;
-        G.y /= 2.0f;
 
-
-
+        area *= 0.5f;
         break;
     }
     default:
-        return 0.0f;
+        break;
     }
-    return 0.0f;
+    return absf(area);
 }
 #endif // SHAPE2D_H
