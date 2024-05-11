@@ -40,7 +40,7 @@ typedef struct capsule
     float radius;
 } Capsule;
 
-inline float area(ShapeType type, void* define)
+inline float shape_area(ShapeType type, void* define)
 {
     float area = 0.0f;
     switch (type) {
@@ -69,7 +69,7 @@ inline float area(ShapeType type, void* define)
         Polygon* poly = (Polygon*)define;
         int j = (int)(poly->count) - 1;
         for (int i = 0; i < (int)(poly->count); ++i) {
-            area += (poly->points[i].x + poly->points[j].x) * (poly->points[i].y + poly->points[j].y);
+            area += (poly->points[j].x + poly->points[i].x) * (poly->points[j].y - poly->points[i].y);
             j = i;
         }
 

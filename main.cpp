@@ -28,17 +28,32 @@ int main(int argc, char *argv[])
 
     Circle circle;
     circle.center = (Vec2) {0.0f, 0.0f};
-    circle.radius = 1.0f;
+    circle.radius = 3.0f;
+
+
+    Polygon polygon;
+    polygon.count = 6;
+    polygon.points = (Vec2*)malloc(polygon.count * sizeof(Vec2));
+    polygon.points[0] = (Vec2) { 0.0f, 0.0f};
+    polygon.points[1] = (Vec2) { 0.5f, -0.5f};
+    polygon.points[2] = (Vec2) { 1.0f, 0.0f};
+    polygon.points[3] = (Vec2) { 1.0f, 1.0f};
+    polygon.points[4] = (Vec2) { 0.5f, 1.5f};
+    polygon.points[5] = (Vec2) { 0.0f, 1.0f};
+
 
     BID Aid = CreateBody(world, &bodyA);
     BID Bid = CreateBody(world, &bodyB);
     SID shapeA = CreateShape(world, Aid, CIRCLE, &circle);
-    SID shapeB = CreateShape(world, Bid, CIRCLE, &circle);
+    SID shapeB = CreateShape(world, Bid, POLYGON, &polygon);
+
+    float circle_area = shape_area(CIRCLE, &circle);
+    float polygon_area = shape_area(POLYGON, &polygon);
 
     qDebug("Body Id index: %d, world: %p", Aid.index, Aid.world);
-    qDebug("Shape Id index: %d, world: %p", shapeA.index, shapeA.world);
+    qDebug("Shape Id index: %d, world: %p, area: %f", shapeA.index, shapeA.world, circle_area);
     qDebug("Body Id index: %d, world: %p", Bid.index, Bid.world);
-    qDebug("Shape Id index: %d, world: %p", shapeB.index, shapeB.world);
+    qDebug("Shape Id index: %d, world: %p, area: %f", shapeB.index, shapeB.world, polygon_area);
 
     QTimer timer;
     timer.setInterval(FPS/1000);
