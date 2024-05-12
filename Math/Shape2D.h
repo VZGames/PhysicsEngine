@@ -81,4 +81,6 @@ inline float shape_area(ShapeType type, void* define)
     }
     return absf(area);
 }
+
+
 #endif // SHAPE2D_H

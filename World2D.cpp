@@ -1,7 +1,6 @@
 #include "World2D.h"
 #include <stdlib.h>
 #include <string.h>
-#include "Math/Matrix2D.h"
 
 W2D *CreateWorld(float g, unsigned char w, unsigned char h)
 {

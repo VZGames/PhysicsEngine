@@ -27,6 +27,7 @@ HEADERS += \
     DataStructs/AABB.h \
     DataStructs/QuadTree.h \
     Math/Matrix2D.h \
+    Math/Rect2D.h \
     Math/Shape2D.h \
     Math/Transform2D.h \
     Math/Vector2D.h \

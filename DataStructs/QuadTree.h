@@ -1,25 +1,38 @@
 #ifndef QUADTREE_H
 #define QUADTREE_H
 
-typedef struct quad_tree_entity
+#include "Math/Rect2D.h"
+
+struct QuadTree
 {
-    void* entities;
-} QuadTreeEntity;
+    Rect2D rect; // boundary
+    void** objects; // list of objects
+    QuadTree** nodes; // list of nodes
+};
 
-typedef struct quad_tree_node
+QuadTree* CreateQuadTree()
 {
-    QuadTreeEntity* entities;
 
-} QuadTreeNode;
+}
 
-typedef struct quad_tree
+void Insert(QuadTree* node, void* obj)
 {
-    QuadTreeNode* root;
-    unsigned char maxDepth;
-    unsigned char maxSize;
-} QuadTree;
 
+}
 
+void Clear(QuadTree* tree)
+{
+    if (tree == NULL) return;
+    else
+    {
+
+    }
+}
+
+bool IsContain(QuadTree* node, void* obj)
+{
+
+}
 
 
 #endif // QUADTREE_H
