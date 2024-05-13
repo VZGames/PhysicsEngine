@@ -12,15 +12,15 @@ typedef struct point
 
 inline Vec2 zero() { return (Vec2){0.0f, 0.0f}; }
 
-inline Vec2 plus(Vec2 A, Vec2 B){return (Vec2){ A.x + B.x, A.y + B.y };}
+inline Vec2 add(Vec2 A, Vec2 B){return (Vec2){ A.x + B.x, A.y + B.y };}
 
-inline Vec2 minus(Vec2 A, Vec2 B){return (Vec2){ A.x - B.x, A.y - B.y };}
+inline Vec2 subtract(Vec2 A, Vec2 B){return (Vec2){ A.x - B.x, A.y - B.y };}
 
-inline Vec2 star(Vec2 A, Vec2 B){return (Vec2){ A.x * B.x, A.y * B.y };}
+inline Vec2 multiply(Vec2 A, Vec2 B){return (Vec2){ A.x * B.x, A.y * B.y };}
 
-inline Vec2 slash(Vec2 A, Vec2 B){return (Vec2){ A.x / B.x, A.y / B.y };}
+inline Vec2 divide(Vec2 A, Vec2 B){return (Vec2){ A.x / B.x, A.y / B.y };}
 
-inline void scale(Vec2* vec, float n){(*vec) = slash((*vec), (Vec2){n, n});}
+inline void scale(Vec2* vec, float n){(*vec) = divide((*vec), (Vec2){n, n});}
 
 inline float dot_product(Vec2 A, Vec2 B){return (A.x * B.x + A.y * B.y);}
 

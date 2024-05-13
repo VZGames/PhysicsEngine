@@ -4,6 +4,8 @@
 
 #include "World2D.h"
 #include "Body2D.h"
+#include "DataStructs/QuadTree.h"
+
 #define FPS 60
 
 int main(int argc, char *argv[])
@@ -17,14 +19,14 @@ int main(int argc, char *argv[])
     bodyA.density = 1.0f;
     bodyA.mass = 1.0f;
     bodyA.restitution = 0.3f;
-    bodyA.position = (Vec2) {30, 50};
+    bodyA.position = (Vec2) {2.7f, 1.3f};
 
     B2D bodyB;
     bodyB.type = STATIC_TYPE;
     bodyB.density = 1.0f;
     bodyB.mass = 1.0f;
     bodyB.restitution = 0.3f;
-    bodyB.position = (Vec2) {30, 50};
+    bodyB.position = (Vec2) {2.4f, 1.6f};
 
     Circle circle;
     circle.center = (Vec2) {0.0f, 0.0f};
@@ -44,6 +46,7 @@ int main(int argc, char *argv[])
 
     BID Aid = CreateBody(world, &bodyA);
     BID Bid = CreateBody(world, &bodyB);
+
     SID shapeA = CreateShape(world, Aid, CIRCLE, &circle);
     SID shapeB = CreateShape(world, Bid, POLYGON, &polygon);
 
@@ -55,6 +58,15 @@ int main(int argc, char *argv[])
     qDebug("Body Id index: %d, world: %p", Bid.index, Bid.world);
     qDebug("Shape Id index: %d, world: %p, area: %f", shapeB.index, shapeB.world, polygon_area);
 
+
+
+    QuadTree* tree = CreateQuadTreeNode(world->w, world->h);
+    Insert(tree, &bodyA);
+    Insert(tree, &bodyB);
+
+
+
+
     QTimer timer;
     timer.setInterval(FPS/1000);
     timer.callOnTimeout([&](){
@@ -65,6 +77,7 @@ int main(int argc, char *argv[])
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     engine.load(url);
     timer.start();
+    free(tree);
 
 
     return app.exec();
