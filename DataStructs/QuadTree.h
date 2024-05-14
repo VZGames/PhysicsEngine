@@ -1,6 +1,7 @@
 #ifndef QUADTREE_H
 #define QUADTREE_H
 
+#include <stdlib.h>
 #include <stdio.h>
 #include "Math/Rect2D.h"
 #include "Body2D.h"
@@ -18,6 +19,7 @@ struct QuadTree
 {
     Rect2D rect; // boundary
     void** objects; // list of objects
+    size_t numOfObjects; // number of objects in list
     QuadTree* nodes[QuadtreeNode::NodeLimit]; // list of nodes
 };
 
@@ -58,10 +60,18 @@ QuadTree* CreateQuadTreeNode(float window_width, float window_height)
 
 void Insert(QuadTree* node, void* obj)
 {
-    if (obj == NULL) return;
     if (node == NULL) return;
+    if (obj == NULL) return;
+
+//    size_t obj_idx = node->numOfObjects;
+//    node->numOfObjects = obj_idx + 1;
+//    node->objects = (void**)realloc(node->objects, node->numOfObjects);
+//    node->objects[obj_idx] = obj;
+
     B2D* body = (B2D*)obj;
     int index = hash(node, body->position.x, body->position.y);
+
+
     Insert(node->nodes[(QuadtreeNode)index], NULL); // have not anchor yet
 
 }
@@ -77,17 +87,30 @@ int hash(QuadTree* node, float x, float y) // get cell index
     if(hashX > columns) hashX = columns - 1;
     if(hashY < 0) hashY = 0;
     if(hashY > rows) hashY = rows - 1;
-
     return ((hashY * columns) + hashX);
 }
 
-void Clear(QuadTree* tree)
+void Clear(QuadTree* node)
 {
-    if (tree == NULL) return;
-    else
-    {
+//    if (node != NULL)
+//    {
+//        // Clear all nodes
+//        for (int i = QuadtreeNode::WestNorth; i < QuadtreeNode::NodeLimit; i++)
+//        {
+//            Clear(node->nodes[i]);
+//            free(node->nodes[i]);
+//            node->nodes[i] = 0;
+//        }
+//        free(node);
+//        node = NULL;
+//    }
 
-    }
+    // Clear current Quadtree
+//    for (int i = 0; i < (int)node->numOfObjects; i++)
+//    {
+//        if (node->objects[i] == NULL) continue;
+//        free(node->objects[i]);
+//    }
 }
 
 bool IsContain(QuadTree* node, void* obj)

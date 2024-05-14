@@ -65,8 +65,6 @@ int main(int argc, char *argv[])
     Insert(tree, &bodyB);
 
 
-
-
     QTimer timer;
     timer.setInterval(FPS/1000);
     timer.callOnTimeout([&](){
@@ -77,7 +75,7 @@ int main(int argc, char *argv[])
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     engine.load(url);
     timer.start();
-    free(tree);
+    Clear(tree);
 
 
     return app.exec();
