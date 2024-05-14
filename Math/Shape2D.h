@@ -14,6 +14,12 @@ typedef enum e_shape_type
     CAPSULE
 } ShapeType;
 
+typedef struct shape_2d
+{
+    ShapeType type;
+    void* define;
+} Shape2D;
+
 typedef struct polygon
 {
     Vec2* points;

@@ -3,14 +3,14 @@
 #include <cstdlib>
 #include <Math/Shape2D.h>
 
-BID CreateBody(W2D *w, B2D* define)
+Body2D* CreateBody(World2D *w, Body2D* define)
 {
     for (int i = 0; i < MAX_BODY; ++i) {
         if (w->bodyBitset[i] == 0)
         {
             w->bodyBitset[i] = 1;
-            B2D* body = (B2D*)malloc(sizeof(B2D));
-
+            Body2D* body = (Body2D*)malloc(sizeof(Body2D));
+            body->index                     = i;
             body->position                  = define->position;
             body->density                   = define->density;
             body->linearVelocity            = define->linearVelocity;
@@ -19,98 +19,47 @@ BID CreateBody(W2D *w, B2D* define)
             body->restitution               = define->restitution;
             body->mass                      = define->mass;
             body->type                      = define->type;
-            body->shapeId                   = define->shapeId;
+            body->shape                     = define->shape;
             w->bodies[i] = body;
-            return (BID) {i, w};
+            return body;
         }
     }
-    return (BID) {-1, NULL};
+    return NULL;
 }
 
-SID CreateShape(W2D* world, BID target, ShapeType type, void* data)
+Shape2D* CreateShape(Body2D* target, ShapeType type, void* define)
 {
-    for (int i = 0; i < MAX_SHAPE; ++i) {
-        if (world->shapeBitset[i] == 0)
-        {
-            world->shapeBitset[i] = 1;
-            world->shapes[i] = malloc(sizeof(B2D));
-
-            B2D* body = (B2D*)world->bodies[target.index];
-            body->shapeId = (SID) {i, world};
-
-            switch (type) {
-            case ShapeType::POLYGON:
-            {
-                Polygon* define = (Polygon*)data;
-                Polygon* shape  = (Polygon*)world->shapes[i];
-                shape->count    = define->count;
-                shape->points   = define->points;
-                break;
-            }
-            case ShapeType::CIRCLE:
-            {
-                Circle* define  = (Circle*)data;
-                Circle* shape   = (Circle*)world->shapes[i];
-                shape->center   = define->center;
-                shape->radius   = define->radius;
-                break;
-            }
-            case ShapeType::ELLIPSE:
-            {
-                Ellipse* define = (Ellipse*)data;
-                Ellipse* shape  = (Ellipse*)world->shapes[i];
-                shape->a        = define->a;
-                shape->b        = define->b;
-                shape->center   = define->center;
-                break;
-            }
-            case ShapeType::CAPSULE:
-            {
-                Capsule* define = (Capsule*)data;
-                Capsule* shape  = (Capsule*)world->shapes[i];
-                shape->center   = define->center;
-                shape->height   = define->height;
-                shape->radius   = define->radius;
-                break;
-            }
-            default:
-                break;
-            }
-
-            return body->shapeId;
-        }
-    }
-    return (SID) {-1, NULL};
+    if (target->shape != NULL) return target->shape;
+    Shape2D* shape = (Shape2D*)malloc(sizeof(Shape2D));
+    target->shape = shape;
+    target->shape->define = define;
+    target->shape->type = type;
+    return shape;
 
 }
 
-void DestroyBody(BID id)
+void DestroyBody(World2D* world, Body2D* body)
 {
-    W2D* world = (W2D*)id.world;
-    world->bodyBitset[id.index] = 0;
-    free((void*)world->bodies[id.index]);
+    world->bodyBitset[body->index] = 0;
+    world->bodies[body->index] = NULL;
+    free((void*)body->shape);
+    free((void*)body);
 }
 
-void DestroyShape(SID id)
+Trans2D GetTransform(Body2D* target)
 {
-    W2D* world = (W2D*)id.world;
-    world->shapeBitset[id.index] = 0;
-    free((void*)world->shapes[id.index]);
+    return target->transform;
 }
 
-Trans2D GetTransform(BID target)
+void SetTransform(Body2D* target, float x, float y, float angle)
 {
-    W2D* world          = (W2D*)target.world;
-    B2D* body           = (B2D*)world->bodies[target.index];
-    return body->transform;
+    target->transform.x   = x;
+    target->transform.y   = y;
+    target->transform.cos = cos(angle);
+    target->transform.sin = sin(angle);
 }
 
-void SetTransform(BID target, float x, float y, float angle)
+void *GetShape(Body2D* body)
 {
-    W2D* world          = (W2D*)target.world;
-    B2D* body           = (B2D*)world->bodies[target.index];
-    body->transform.x   = x;
-    body->transform.y   = y;
-    body->transform.cos = cos(angle);
-    body->transform.sin = sin(angle);
+    return body->shape;
 }

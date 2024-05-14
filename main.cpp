@@ -10,24 +10,24 @@
 
 void print(void* data)
 {
-    BID* id = (BID*)data;
-    printf("idx: %d, world: %p\n", id->index, id->world);
+    Body2D* body = (Body2D*)data;
+    printf("idx: %d\n", body->index);
 }
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    W2D* world = CreateWorld(9.8f, 5.0f, 3.0f);
+    World2D* world = CreateWorld(9.8f, 5.0f, 3.0f);
 
-    B2D bodyA;
+    Body2D bodyA;
     bodyA.type = STATIC_TYPE;
     bodyA.density = 1.0f;
     bodyA.mass = 1.0f;
     bodyA.restitution = 0.3f;
     bodyA.position = (Vec2) {2.7f, 1.3f};
 
-    B2D bodyB;
+    Body2D bodyB;
     bodyB.type = STATIC_TYPE;
     bodyB.density = 1.0f;
     bodyB.mass = 1.0f;
@@ -50,26 +50,25 @@ int main(int argc, char *argv[])
     polygon.points[5] = (Vec2) { 0.0f, 1.0f};
 
 
-    BID Aid = CreateBody(world, &bodyA);
-    BID Bid = CreateBody(world, &bodyB);
+    Body2D* objA = CreateBody(world, &bodyA);
+    Body2D* objB = CreateBody(world, &bodyB);
 
-    SID shapeA = CreateShape(world, Aid, CIRCLE, &circle);
-    SID shapeB = CreateShape(world, Bid, POLYGON, &polygon);
+    Shape2D* shapeA = CreateShape(objA, CIRCLE, &circle);
+    Shape2D* shapeB = CreateShape(objB, POLYGON, &polygon);
 
     float circle_area = shape_area(CIRCLE, &circle);
     float polygon_area = shape_area(POLYGON, &polygon);
 
-    qDebug("Body Id index: %d, world: %p", Aid.index, Aid.world);
-    qDebug("Shape Id index: %d, world: %p, area: %f", shapeA.index, shapeA.world, circle_area);
-    qDebug("Body Id index: %d, world: %p", Bid.index, Bid.world);
-    qDebug("Shape Id index: %d, world: %p, area: %f", shapeB.index, shapeB.world, polygon_area);
+    qDebug("Body Id index: %d", objA->index);
+    qDebug("Shape Id address: %p, area: %f", shapeA, circle_area);
+    qDebug("Body Id index: %d", objB->index);
+    qDebug("Shape Id address: %p, area: %f", shapeB, polygon_area);
 
 
 
     QuadTree* tree = CreateQuadTreeNode(world->w, world->h);
     Insert(tree, &bodyA);
     Insert(tree, &bodyB);
-
 
     QTimer timer;
     timer.setInterval(FPS/1000);

@@ -34,5 +34,4 @@ HEADERS += \
     Math/Vector2D.h \
     Body2D.h \
     Utils.h \
-    World2D.h \
-    ids.h
+    World2D.h

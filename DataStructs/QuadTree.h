@@ -24,12 +24,12 @@ struct QuadTree
 };
 
 int hash(QuadTree* node, float x, float y); // get cell index
-QuadTree* CreateQuadTreeNode(float window_width, float window_height)
+QuadTree* CreateQuadTreeNode(float world_width, float world_height)
 {
     QuadTree* root = (QuadTree*)malloc(sizeof(QuadTree));
     root->objects = CreateList();
     root->rect.A = (Vec2){0, 0};
-    root->rect.C = (Vec2){window_width, window_height};
+    root->rect.C = (Vec2){world_width, world_height};
     Vec2 size = subtract(root->rect.C, root->rect.A);
 
     for (int i = QuadtreeNode::WestNorth; i < QuadtreeNode::NodeLimit; i++)
@@ -64,17 +64,10 @@ void Insert(QuadTree* node, void* obj)
     if (node == NULL) return;
     if (obj == NULL) return;
 
-//    size_t obj_idx = node->numOfObjects;
-//    node->numOfObjects = obj_idx + 1;
-//    node->objects = (void**)realloc(node->objects, node->numOfObjects);
-//    node->objects[obj_idx] = obj;
-
-    B2D* body = (B2D*)obj;
+    Body2D* body = (Body2D*)obj;
     int index = hash(node, body->position.x, body->position.y);
 
-
     Insert(node->nodes[(QuadtreeNode)index], NULL); // have not anchor yet
-
 }
 
 int hash(QuadTree* node, float x, float y) // get cell index
