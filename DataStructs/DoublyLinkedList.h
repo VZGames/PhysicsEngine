@@ -2,6 +2,9 @@
 #define DOUBLYLINKEDLIST_H
 
 #include <stdlib.h>
+#include <stdio.h>
+
+typedef void (*TaskFnc)(void*);
 
 struct Node
 {
@@ -26,10 +29,11 @@ void Clear(List* list)
 {
     Node* head = list->head;
     while (head != NULL) {
-        head = head->next;
-        free(head->prev);
-        list->size--;
+        Node* next = head->next;
+        free(head);
+        head = next;
     }
+    list->size = 0;
 }
 
 void PushBack(List* list, void* data)
@@ -65,6 +69,16 @@ void PushFront(List* list, void* data)
     list->head = newNode;
 
     list->size++;
+}
+
+void Travel(List* list, TaskFnc cb)
+{
+    Node* node = list->head;
+    while (node != NULL) {
+        Node* next = node->next;
+        cb(node->data);
+        node = next;
+    }
 }
 
 #endif // DOUBLYLINKEDLIST_H

@@ -5,8 +5,14 @@
 #include "World2D.h"
 #include "Body2D.h"
 #include "DataStructs/QuadTree.h"
-
+#include "DataStructs/DoublyLinkedList.h"
 #define FPS 60
+
+void print(void* data)
+{
+    BID* id = (BID*)data;
+    printf("idx: %d, world: %p\n", id->index, id->world);
+}
 
 int main(int argc, char *argv[])
 {
@@ -76,7 +82,6 @@ int main(int argc, char *argv[])
     engine.load(url);
     timer.start();
     Clear(tree);
-
 
     return app.exec();
 }

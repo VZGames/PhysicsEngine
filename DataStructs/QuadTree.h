@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "Math/Rect2D.h"
+#include "DataStructs/DoublyLinkedList.h"
 #include "Body2D.h"
 
 typedef enum quad_tree_node: int
@@ -18,8 +19,7 @@ typedef enum quad_tree_node: int
 struct QuadTree
 {
     Rect2D rect; // boundary
-    void** objects; // list of objects
-    size_t numOfObjects; // number of objects in list
+    List* objects; // list of objects
     QuadTree* nodes[QuadtreeNode::NodeLimit]; // list of nodes
 };
 
@@ -27,6 +27,7 @@ int hash(QuadTree* node, float x, float y); // get cell index
 QuadTree* CreateQuadTreeNode(float window_width, float window_height)
 {
     QuadTree* root = (QuadTree*)malloc(sizeof(QuadTree));
+    root->objects = CreateList();
     root->rect.A = (Vec2){0, 0};
     root->rect.C = (Vec2){window_width, window_height};
     Vec2 size = subtract(root->rect.C, root->rect.A);
@@ -111,6 +112,8 @@ void Clear(QuadTree* node)
 //        if (node->objects[i] == NULL) continue;
 //        free(node->objects[i]);
 //    }
+
+    Clear(node->objects);
 }
 
 bool IsContain(QuadTree* node, void* obj)
