@@ -3,7 +3,6 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include "Utils.h"
 
 typedef void (*TaskFnc)(void*);
 
@@ -98,7 +97,7 @@ void* ElementAt(List* list, size_t index)
             begin = list->size / 2;
             end = list->size;
         }
-        for (; begin < end && node != NULL; begin++) {
+        for (; begin < (end && node != NULL); begin++) {
             node = node->next;
         }
         if (node == NULL) return NULL;

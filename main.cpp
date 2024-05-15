@@ -54,8 +54,8 @@ int main(int argc, char *argv[])
     Shape2D shapeA = CreateShapeForBody(objA, CIRCLE, circle);
     Shape2D shapeB = CreateShapeForBody(objB, POLYGON, polygon);
 
-    float circle_area = GetShapeArea(&objA->shape);
-    float polygon_area = GetShapeArea(&objB->shape);
+    float circle_area = GetShapeArea(shapeA);
+    float polygon_area = GetShapeArea(shapeB);
 
     qDebug("Body Id index: %d", objA->index);
     qDebug("Shape Id address: %p, area: %f", &shapeA, circle_area);

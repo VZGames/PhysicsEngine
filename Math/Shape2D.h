@@ -84,25 +84,25 @@ inline Capsule* CreateCapsule(Vec2 center, float height, float radius)
     return shape;
 }
 
-inline float GetShapeArea(Shape2D* shape)
+inline float GetShapeArea(Shape2D shape)
 {
     float area = 0.0f;
-    switch (shape->type) {
+    switch (shape.type) {
     case CIRCLE:
     {
-        Circle* circle = (Circle*)shape->define;
+        Circle* circle = (Circle*)shape.define;
         area = (PI * (circle->radius * circle->radius));
         break;
     }
     case ELLIPSE:
     {
-        Ellipse* ellipse = (Ellipse*)shape->define;
+        Ellipse* ellipse = (Ellipse*)shape.define;
         area = (PI * (ellipse->a * ellipse->b));
         break;
     }
     case CAPSULE:
     {
-        Capsule* capsule = (Capsule*)shape->define;
+        Capsule* capsule = (Capsule*)shape.define;
         float circle_area = (PI * (capsule->radius * capsule->radius));
         float rectangle_area = (2 * capsule->radius) * (2 * capsule->radius) * (capsule->height - 1);
         area = circle_area + rectangle_area;
@@ -110,7 +110,7 @@ inline float GetShapeArea(Shape2D* shape)
     }
     case POLYGON:
     {
-        Polygon* poly = (Polygon*)shape->define;
+        Polygon* poly = (Polygon*)shape.define;
         int j = (int)(poly->count) - 1;
         for (int i = 0; i < (int)(poly->count); ++i) {
             area += (poly->points[j].x + poly->points[i].x) * (poly->points[j].y - poly->points[i].y);
