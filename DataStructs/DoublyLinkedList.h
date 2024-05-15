@@ -84,7 +84,7 @@ void* ElementAt(List* list, size_t index)
     if (index >= list->size)
     {
         char msg[50];
-        sprintf(&msg[0], "Index %d out of range, auto return last element if index out of range\n", index);
+        sprintf(&msg[0], "Index %llud out of range, auto return last element if index out of range\n", index);
         printf(msg);
         return list->tail->data;
     }
