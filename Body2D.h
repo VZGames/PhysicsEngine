@@ -23,7 +23,7 @@ typedef struct body_2d_define
     float rotationVelocity;
 
     BodyType type;
-    Shape2D* shape;
+    Shape2D  shape;
 
     float mass;
     float density;
@@ -33,8 +33,8 @@ typedef struct body_2d_define
 } Body2D;
 
 Body2D* CreateBody(World2D* world, Body2D* define);
-Shape2D* CreateShape(Body2D* target, ShapeType type, void* define);
-void* GetShape(Body2D* body);
+Shape2D CreateShapeForBody(Body2D* target, ShapeType type, void* define);
+Shape2D GetShape(Body2D* body);
 void DestroyBody(World2D* world, Body2D* body);
 Trans2D GetTransform(Body2D* target);
 void SetTransform(Body2D* target, float x, float y, float angle);

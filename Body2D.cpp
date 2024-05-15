@@ -1,6 +1,7 @@
 #include "Body2D.h"
 #include <stdio.h>
 #include <cstdlib>
+#include <cstring>
 #include <Math/Shape2D.h>
 
 Body2D* CreateBody(World2D *w, Body2D* define)
@@ -27,14 +28,11 @@ Body2D* CreateBody(World2D *w, Body2D* define)
     return NULL;
 }
 
-Shape2D* CreateShape(Body2D* target, ShapeType type, void* define)
+Shape2D CreateShapeForBody(Body2D* target, ShapeType type, void* define)
 {
-    if (target->shape != NULL) return target->shape;
-    Shape2D* shape = (Shape2D*)malloc(sizeof(Shape2D));
-    target->shape = shape;
-    target->shape->define = define;
-    target->shape->type = type;
-    return shape;
+    target->shape.define = define;
+    target->shape.type = type;
+    return target->shape;
 
 }
 
@@ -42,7 +40,6 @@ void DestroyBody(World2D* world, Body2D* body)
 {
     world->bodyBitset[body->index] = 0;
     world->bodies[body->index] = NULL;
-    free((void*)body->shape);
     free((void*)body);
 }
 
@@ -59,7 +56,7 @@ void SetTransform(Body2D* target, float x, float y, float angle)
     target->transform.sin = sin(angle);
 }
 
-void *GetShape(Body2D* body)
+Shape2D GetShape(Body2D* body)
 {
     return body->shape;
 }

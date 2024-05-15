@@ -34,35 +34,33 @@ int main(int argc, char *argv[])
     bodyB.restitution = 0.3f;
     bodyB.position = (Vec2) {2.4f, 1.6f};
 
-    Circle circle;
-    circle.center = (Vec2) {0.0f, 0.0f};
-    circle.radius = 3.0f;
+    Circle* circle = CreateCircle((Vec2) {0.0f, 0.0f}, 3.0f);
 
+    Vec2 verties[6] = {
+        (Vec2) { 0.0f, 0.0f},
+        (Vec2) { 0.5f, -0.5f},
+        (Vec2) { 1.0f, 0.0f},
+        (Vec2) { 1.0f, 1.0f},
+        (Vec2) { 0.5f, 1.5f},
+        (Vec2) { 0.0f, 1.0f}
+    };
+    Polygon* polygon = CreatePolygon(&verties[0], sizeof(verties)/sizeof(Vec2));
 
-    Polygon polygon;
-    polygon.count = 6;
-    polygon.points = (Vec2*)malloc(polygon.count * sizeof(Vec2));
-    polygon.points[0] = (Vec2) { 0.0f, 0.0f};
-    polygon.points[1] = (Vec2) { 0.5f, -0.5f};
-    polygon.points[2] = (Vec2) { 1.0f, 0.0f};
-    polygon.points[3] = (Vec2) { 1.0f, 1.0f};
-    polygon.points[4] = (Vec2) { 0.5f, 1.5f};
-    polygon.points[5] = (Vec2) { 0.0f, 1.0f};
 
 
     Body2D* objA = CreateBody(world, &bodyA);
     Body2D* objB = CreateBody(world, &bodyB);
 
-    Shape2D* shapeA = CreateShape(objA, CIRCLE, &circle);
-    Shape2D* shapeB = CreateShape(objB, POLYGON, &polygon);
+    Shape2D shapeA = CreateShapeForBody(objA, CIRCLE, circle);
+    Shape2D shapeB = CreateShapeForBody(objB, POLYGON, polygon);
 
-    float circle_area = shape_area(CIRCLE, &circle);
-    float polygon_area = shape_area(POLYGON, &polygon);
+    float circle_area = GetShapeArea(&objA->shape);
+    float polygon_area = GetShapeArea(&objB->shape);
 
     qDebug("Body Id index: %d", objA->index);
-    qDebug("Shape Id address: %p, area: %f", shapeA, circle_area);
+    qDebug("Shape Id address: %p, area: %f", &shapeA, circle_area);
     qDebug("Body Id index: %d", objB->index);
-    qDebug("Shape Id address: %p, area: %f", shapeB, polygon_area);
+    qDebug("Shape Id address: %p, area: %f", &shapeB, polygon_area);
 
     List* list = CreateList();
     PushBack(list, objA);
@@ -72,9 +70,9 @@ int main(int argc, char *argv[])
     printf("XXXXXXXXXX %d\n", data->index);
     Travel(list, print);
 
-//    QuadTree* tree = CreateQuadTreeNode(world->w, world->h);
-//    Insert(tree, &bodyA);
-//    Insert(tree, &bodyB);
+    //    QuadTree* tree = CreateQuadTreeNode(world->w, world->h);
+    //    Insert(tree, &bodyA);
+    //    Insert(tree, &bodyB);
 
     QTimer timer;
     timer.setInterval(FPS/1000);
