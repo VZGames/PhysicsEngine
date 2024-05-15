@@ -88,7 +88,14 @@ void* ElementAt(List* list, size_t index)
     }
     else
     {
-        for (size_t i = 0; i < index && node != NULL; i++) {
+        size_t begin = 0;
+        size_t end = list->size / 2;
+        if (index > list->size / 2)
+        {
+            begin = list->size / 2;
+            end = list->size;
+        }
+        for (; begin < end && node != NULL; begin++) {
             node = node->next;
         }
         if (node == NULL) return NULL;
