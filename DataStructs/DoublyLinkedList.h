@@ -3,6 +3,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include "Utils.h"
 
 typedef void (*TaskFnc)(void*);
 
@@ -83,7 +84,9 @@ void* ElementAt(List* list, size_t index)
     Node* node = list->head;
     if (index >= list->size)
     {
-        printf("Index %d out of range, auto return last element if index out of range\n", index);
+        char msg[50];
+        sprintf(&msg[0], "Index %d out of range, auto return last element if index out of range\n", index);
+        printf(msg);
         return list->tail->data;
     }
     else

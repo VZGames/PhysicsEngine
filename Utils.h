@@ -3,6 +3,7 @@
 
 #include <time.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 inline float absf(float v)
 {
