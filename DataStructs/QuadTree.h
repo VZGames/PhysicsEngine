@@ -24,39 +24,39 @@ struct QuadTree
 };
 
 int hash(QuadTree* node, float x, float y); // get cell index
-QuadTree* CreateQuadTreeNode(float world_width, float world_height)
+QuadTree* CreateQuadTreeNode(float width, float height)
 {
-    QuadTree* root = (QuadTree*)malloc(sizeof(QuadTree));
-    root->objects = CreateList();
-    root->rect.A = (Vec2){0, 0};
-    root->rect.C = (Vec2){world_width, world_height};
-    Vec2 size = subtract(root->rect.C, root->rect.A);
+    QuadTree* node = (QuadTree*)malloc(sizeof(QuadTree));
+    node->objects = CreateList();
+    node->rect.A = (Vec2){0, 0};
+    node->rect.C = (Vec2){width, height};
+    Vec2 size = subtract(node->rect.C, node->rect.A);
 
     for (int i = QuadtreeNode::WestNorth; i < QuadtreeNode::NodeLimit; i++)
     {
-        root->nodes[i] = (QuadTree*)malloc(sizeof(QuadTree));
+        node->nodes[i] = (QuadTree*)malloc(sizeof(QuadTree));
     }
 
-    root->nodes[WestNorth]->rect.A.x    =  root->rect.A.x;
-    root->nodes[WestNorth]->rect.A.y    =  root->rect.A.y;
-    root->nodes[WestNorth]->rect.C.x    =  root->rect.A.x + size.x/2;
-    root->nodes[WestNorth]->rect.C.y    =  root->rect.A.y + size.y/2;
+    node->nodes[WestNorth]->rect.A.x    =  node->rect.A.x;
+    node->nodes[WestNorth]->rect.A.y    =  node->rect.A.y;
+    node->nodes[WestNorth]->rect.C.x    =  node->rect.A.x + size.x/2;
+    node->nodes[WestNorth]->rect.C.y    =  node->rect.A.y + size.y/2;
 
-    root->nodes[EastNorth]->rect.A.x    =  root->rect.A.x + size.x/2;
-    root->nodes[EastNorth]->rect.A.y    =  root->rect.A.y;
-    root->nodes[EastNorth]->rect.C.x    =  root->rect.A.x + size.x;
-    root->nodes[EastNorth]->rect.C.y    =  root->rect.A.y + size.y/2;
+    node->nodes[EastNorth]->rect.A.x    =  node->rect.A.x + size.x/2;
+    node->nodes[EastNorth]->rect.A.y    =  node->rect.A.y;
+    node->nodes[EastNorth]->rect.C.x    =  node->rect.A.x + size.x;
+    node->nodes[EastNorth]->rect.C.y    =  node->rect.A.y + size.y/2;
 
-    root->nodes[EastSouth]->rect.A.x    =  root->rect.A.x;
-    root->nodes[EastSouth]->rect.A.y    =  root->rect.A.y + size.y/2;
-    root->nodes[EastSouth]->rect.C.x    =  root->rect.A.x + size.x/2;
-    root->nodes[EastSouth]->rect.C.y    =  root->rect.A.y + size.y;
+    node->nodes[EastSouth]->rect.A.x    =  node->rect.A.x;
+    node->nodes[EastSouth]->rect.A.y    =  node->rect.A.y + size.y/2;
+    node->nodes[EastSouth]->rect.C.x    =  node->rect.A.x + size.x/2;
+    node->nodes[EastSouth]->rect.C.y    =  node->rect.A.y + size.y;
 
-    root->nodes[WestSouth]->rect.A.x    =  root->rect.A.x + size.x/2;
-    root->nodes[WestSouth]->rect.A.y    =  root->rect.A.y + size.y/2;
-    root->nodes[WestSouth]->rect.C.x    =  root->rect.C.x;
-    root->nodes[WestSouth]->rect.C.y    =  root->rect.C.y;
-    return root;
+    node->nodes[WestSouth]->rect.A.x    =  node->rect.A.x + size.x/2;
+    node->nodes[WestSouth]->rect.A.y    =  node->rect.A.y + size.y/2;
+    node->nodes[WestSouth]->rect.C.x    =  node->rect.C.x;
+    node->nodes[WestSouth]->rect.C.y    =  node->rect.C.y;
+    return node;
 }
 
 void Insert(QuadTree* node, void* obj)
@@ -66,6 +66,7 @@ void Insert(QuadTree* node, void* obj)
 
     Body2D* body = (Body2D*)obj;
     int index = hash(node, body->position.x, body->position.y);
+
 
     Insert(node->nodes[(QuadtreeNode)index], NULL); // have not anchor yet
 }

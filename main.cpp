@@ -66,13 +66,9 @@ int main(int argc, char *argv[])
     PushBack(list, objA);
     PushBack(list, objB);
 
-    Body2D* data = (Body2D*)ElementAt(list, 2);
-    printf("XXXXXXXXXX %d\n", data->index);
-    Travel(list, print);
-
-    //    QuadTree* tree = CreateQuadTreeNode(world->w, world->h);
-    //    Insert(tree, &bodyA);
-    //    Insert(tree, &bodyB);
+    QuadTree* tree = CreateQuadTreeNode(world->w, world->h);
+    Insert(tree, &bodyA);
+    Insert(tree, &bodyB);
 
     QTimer timer;
     timer.setInterval(FPS/1000);
@@ -84,7 +80,7 @@ int main(int argc, char *argv[])
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     engine.load(url);
     timer.start();
-    Clear(list);
+    Clear(tree);
 
     return app.exec();
 }
