@@ -45,17 +45,21 @@ void PushBack(List* list, void* data)
 {
     Node* newNode = (Node*)malloc(sizeof(Node));
     newNode->data = data;
+    newNode->prev = list->tail;
+    newNode->next = NULL;
 
     if (list->head == NULL)
     {
-        list->head = list->tail = newNode;
+        list->head = newNode;
     }
-    else
+
+    if (list->tail != NULL)
     {
         list->tail->next = newNode;
-        newNode->prev = list->tail;
-        list->tail = newNode;
     }
+
+    list->tail = newNode;
+
     list->size++;
 }
 
@@ -72,7 +76,6 @@ void PushFront(List* list, void* data)
     }
 
     list->head = newNode;
-
     list->size++;
 }
 

@@ -64,11 +64,15 @@ int main(int argc, char *argv[])
     qDebug("Body Id index: %d", objB->index);
     qDebug("Shape Id address: %p, area: %f", shapeB, polygon_area);
 
+    List* list = CreateList();
+    PushBack(list, objA);
+    PushBack(list, objB);
 
+    Travel(list, print);
 
-    QuadTree* tree = CreateQuadTreeNode(world->w, world->h);
-    Insert(tree, &bodyA);
-    Insert(tree, &bodyB);
+//    QuadTree* tree = CreateQuadTreeNode(world->w, world->h);
+//    Insert(tree, &bodyA);
+//    Insert(tree, &bodyB);
 
     QTimer timer;
     timer.setInterval(FPS/1000);
@@ -80,7 +84,7 @@ int main(int argc, char *argv[])
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     engine.load(url);
     timer.start();
-    Clear(tree);
+    Clear(list);
 
     return app.exec();
 }
