@@ -68,6 +68,8 @@ int main(int argc, char *argv[])
     PushBack(list, objA);
     PushBack(list, objB);
 
+    Body2D* data = (Body2D*)ElementAt(list, 2);
+    printf("XXXXXXXXXX %d\n", data->index);
     Travel(list, print);
 
 //    QuadTree* tree = CreateQuadTreeNode(world->w, world->h);

@@ -59,7 +59,6 @@ void PushBack(List* list, void* data)
     }
 
     list->tail = newNode;
-
     list->size++;
 }
 
@@ -77,6 +76,25 @@ void PushFront(List* list, void* data)
 
     list->head = newNode;
     list->size++;
+}
+
+void* ElementAt(List* list, size_t index)
+{
+    Node* node = list->head;
+    if (index >= list->size)
+    {
+        printf("Index %d out of range, auto return last element if index out of range\n", index);
+        return list->tail->data;
+    }
+    else
+    {
+        for (size_t i = 0; i < index && node != NULL; i++) {
+            node = node->next;
+        }
+        if (node == NULL) return NULL;
+    }
+
+    return node->data;
 }
 
 void Travel(List* list, TaskFnc cb)
