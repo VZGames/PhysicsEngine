@@ -64,8 +64,8 @@ int main(int argc, char *argv[])
     qDebug("Shape Id address: %p, area: %f", &shapeB, polygon_area);
 
     QuadTree* tree = CreateQuadTreeNode(world->w, world->h);
-    Insert(tree, &bodyA);
-    Insert(tree, &bodyB);
+    Insert(tree, &objA);
+    Insert(tree, &objB);
 
     QTimer timer;
     timer.setInterval(FPS/1000);
