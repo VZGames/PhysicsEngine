@@ -25,6 +25,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     DataStructs/AABB.h \
+    DataStructs/Array1D.h \
     DataStructs/DoublyLinkedList.h \
     DataStructs/QuadTree.h \
     Math/Matrix2D.h \

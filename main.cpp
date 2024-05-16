@@ -6,6 +6,7 @@
 #include "Body2D.h"
 #include "DataStructs/QuadTree.h"
 #include "DataStructs/DoublyLinkedList.h"
+#include "DataStructs/Array1D.h"
 #define FPS 60
 
 void print(void* data)
@@ -57,14 +58,10 @@ int main(int argc, char *argv[])
     float circle_area = GetShapeArea(shapeA);
     float polygon_area = GetShapeArea(shapeB);
 
-    qDebug("Body Id index: %d", objA->index);
+    qDebug("Body Id index: %d, Address: %p", objA->index, &objA);
     qDebug("Shape Id address: %p, area: %f", &shapeA, circle_area);
-    qDebug("Body Id index: %d", objB->index);
+    qDebug("Body Id index: %d, Address: %p", objB->index, &objB);
     qDebug("Shape Id address: %p, area: %f", &shapeB, polygon_area);
-
-    List* list = CreateList();
-    PushBack(list, objA);
-    PushBack(list, objB);
 
     QuadTree* tree = CreateQuadTreeNode(world->w, world->h);
     Insert(tree, &bodyA);
