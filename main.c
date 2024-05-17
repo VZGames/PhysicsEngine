@@ -62,10 +62,10 @@ int main()
 //    QuadtreeInsert(tree, &objB);
 
 //    QuadTreeClear(tree);
-    int k[5] = {3, 5, 0, 1, 9};
+    int k[7] = {3, 5, 0, 1, 9, 8, 2};
     int j = 4;
     struct Array1D* arr = CreateArray1D();
-    for (int i = 0; i < 5; ++i) {
+    for (size_t i = 0; i < sizeof(k)/sizeof(int); ++i) {
         Array1DPush(arr, &k[i]);
     }
 

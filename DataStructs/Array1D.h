@@ -16,21 +16,21 @@ struct Array1D* CreateArray1D()
     struct Array1D* arr = (struct Array1D*)malloc(sizeof(struct Array1D));
     arr->size = 0;
     arr->capacity = 5;
-    arr->array = (void**)malloc(sizeof(void*) * arr->capacity);
+    arr->array = (void*)malloc(sizeof(void*) * arr->capacity);
     return arr;
 }
 
-size_t SizeOfArr(struct Array1D* arr)
+size_t ArrayTotalSize(struct Array1D* arr)
 {
     return arr->size;
 }
 
 void Array1DPush(struct Array1D* arr, void* el)
 {
-    if (arr->size >= arr->capacity)
+    if (arr->size > arr->capacity)
     {
         arr->capacity += 5;
-        arr->array  = (void**)realloc(arr->array, arr->capacity);
+        arr->array  = (void*)realloc(arr->array, (sizeof(void*) * arr->capacity));
     }
     arr->array[arr->size] = el;
     arr->size++;
