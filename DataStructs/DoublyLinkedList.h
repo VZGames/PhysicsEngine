@@ -9,20 +9,20 @@ typedef void (*TaskFnc)(void*);
 struct Node
 {
     void* data;
-    Node *next = NULL;
-    Node *prev = NULL;
+    struct Node *next;
+    struct Node *prev;
 };
 
 struct List
 {
-    Node* head = NULL;
-    Node* tail = NULL;
-    size_t size = 0;
+    struct Node* head;
+    struct Node* tail;
+    size_t size;
 };
 
-List* CreateList()
+struct List* CreateList()
 {
-    List* list = (List*)malloc(sizeof(List));
+    struct List* list = (struct List*)malloc(sizeof(struct List));
     list->head = NULL;
     list->tail = NULL;
     list->size = 0;
@@ -30,20 +30,20 @@ List* CreateList()
     return list;
 }
 
-void Clear(List* list)
+void ListClear(struct List* list)
 {
-    Node* head = list->head;
+    struct Node* head = list->head;
     while (head != NULL) {
-        Node* next = head->next;
+        struct Node* next = head->next;
         free(head);
         head = next;
     }
     list->size = 0;
 }
 
-void PushBack(List* list, void* data)
+void ListPushBack(struct List* list, void* data)
 {
-    Node* newNode = (Node*)malloc(sizeof(Node));
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
     newNode->data = data;
     newNode->prev = list->tail;
     newNode->next = NULL;
@@ -62,9 +62,9 @@ void PushBack(List* list, void* data)
     list->size++;
 }
 
-void PushFront(List* list, void* data)
+void ListPushFront(struct List* list, void* data)
 {
-    Node* newNode = (Node*)malloc(sizeof(Node));
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
     newNode->data = data;
     newNode->prev = NULL;
     newNode->next = list->head;
@@ -78,14 +78,12 @@ void PushFront(List* list, void* data)
     list->size++;
 }
 
-void* ElementAt(List* list, size_t index)
+void* ListElementAt(struct List* list, size_t index)
 {
-    Node* node = list->head;
+    struct Node* node = list->head;
     if (index >= list->size)
     {
-        char msg[50];
-        sprintf(&msg[0], "Index %llud out of range, auto return last element if index out of range\n", index);
-        printf(msg);
+        printf("Index %llud out of range, auto return last element if index out of range\n", index);
         return list->tail->data;
     }
     else
@@ -106,11 +104,11 @@ void* ElementAt(List* list, size_t index)
     return node->data;
 }
 
-void Travel(List* list, TaskFnc cb)
+void ListTraverse(struct List* list, TaskFnc cb)
 {
-    Node* node = list->head;
+    struct Node* node = list->head;
     while (node != NULL) {
-        Node* next = node->next;
+        struct Node* next = node->next;
         cb(node->data);
         node = next;
     }

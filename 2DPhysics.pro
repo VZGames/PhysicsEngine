@@ -1,38 +1,31 @@
-QT += quick
-CONFIG += c++11
-
-# You can make your code fail to compile if it uses deprecated APIs.
-# In order to do so, uncomment the following line.
-#DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
+TEMPLATE = app
+CONFIG += console
+CONFIG -= app_bundle
+CONFIG -= qt
 
 SOURCES += \
-        Body2D.cpp \
-        World2D.cpp \
-        main.cpp
+        Body2D.c \
+        World2D.c \
+        main.c
 
-RESOURCES += qml.qrc
-
-# Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH =
-
-# Additional import path used to resolve QML modules just for Qt Quick Designer
-QML_DESIGNER_IMPORT_PATH =
-
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
+DISTFILES += \
+    README.md
 
 HEADERS += \
-    DataStructs/AABB.h \
-    DataStructs/Array1D.h \
-    DataStructs/DoublyLinkedList.h \
-    DataStructs/QuadTree.h \
     Math/Matrix2D.h \
     Math/Rect2D.h \
     Math/Shape2D.h \
     Math/Transform2D.h \
     Math/Vector2D.h \
     Body2D.h \
+    DataStructs/AABB.h \
+    DataStructs/Array1D.h \
+    DataStructs/DoublyLinkedList.h \
+    DataStructs/QuadTree.h \
     Utils.h \
     World2D.h
+
+INCLUDEPATH += \
+    $PWD/Math \
+    $PWD/DataStructs \
+    $PWD

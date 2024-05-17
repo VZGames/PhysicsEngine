@@ -6,14 +6,14 @@
 #include "Math/Transform2D.h"
 #include "World2D.h"
 
-typedef enum e_body_type
+typedef enum
 {
     STATIC_TYPE,
     DYNAMIC_TYPE,
     KINEMATIC_TYPE
 } BodyType;
 
-typedef struct body_2d_define
+typedef struct
 {
     int index;
     Vec2 position;

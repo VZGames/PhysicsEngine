@@ -9,7 +9,6 @@ World2D *CreateWorld(float g, unsigned char w, unsigned char h)
     world->w = w;
     world->h = h;
     world->bodyBitset = (bool*)calloc(MAX_BODY, sizeof(bool));
-    memset(&world->bodies[0], 0, sizeof(void*));
     return world;
 }
 

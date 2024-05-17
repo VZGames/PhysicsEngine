@@ -3,7 +3,7 @@
 
 #include <math.h>
 
-typedef struct transform_2d
+typedef struct
 {
     float x;
     float y;

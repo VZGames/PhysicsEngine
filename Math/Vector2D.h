@@ -2,9 +2,10 @@
 #define VECTOR2D_H
 
 #include <math.h>
+#include <stdbool.h>
 #include "Transform2D.h"
 
-typedef struct point
+typedef struct
 {
     float x;
     float y;

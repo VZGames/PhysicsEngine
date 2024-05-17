@@ -19,7 +19,7 @@ inline int absi(int v)
 
 inline int randInt(int max)
 {
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
     return rand() % (max + 1);
 }
 inline float rantReal(float max)

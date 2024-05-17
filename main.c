@@ -1,24 +1,23 @@
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QTimer>
+#include <stdio.h>
 
 #include "World2D.h"
 #include "Body2D.h"
 #include "DataStructs/QuadTree.h"
-#include "DataStructs/DoublyLinkedList.h"
 #include "DataStructs/Array1D.h"
-#define FPS 60
 
-void print(void* data)
+void printList(void* data)
 {
     Body2D* body = (Body2D*)data;
     printf("idx: %d\n", body->index);
 }
 
-int main(int argc, char *argv[])
+void printArr(void* data)
 {
-    QGuiApplication app(argc, argv);
+    printf("%d\n", *(int*)data);
+}
 
+int main()
+{
     World2D* world = CreateWorld(9.8f, 5.0f, 3.0f);
 
     Body2D bodyA;
@@ -58,26 +57,23 @@ int main(int argc, char *argv[])
     float circle_area = GetShapeArea(shapeA);
     float polygon_area = GetShapeArea(shapeB);
 
-    qDebug("Body Id index: %d, Address: %p", objA->index, &objA);
-    qDebug("Shape Id address: %p, area: %f", &shapeA, circle_area);
-    qDebug("Body Id index: %d, Address: %p", objB->index, &objB);
-    qDebug("Shape Id address: %p, area: %f", &shapeB, polygon_area);
+    struct QuadTree* tree = CreateQuadTreeNode(world->w, world->h);
+//    QuadtreeInsert(tree, &objA);
+//    QuadtreeInsert(tree, &objB);
 
-    QuadTree* tree = CreateQuadTreeNode(world->w, world->h);
-    Insert(tree, &objA);
-    Insert(tree, &objB);
+//    QuadTreeClear(tree);
+    int k[5] = {3, 5, 0, 1, 9};
+    int j = 4;
+    struct Array1D* arr = CreateArray1D();
+    for (int i = 0; i < 5; ++i) {
+        Array1DPush(arr, &k[i]);
+    }
 
-    QTimer timer;
-    timer.setInterval(FPS/1000);
-    timer.callOnTimeout([&](){
-        Update(world, FPS/1000, 10);
-    });
+    Array1DInsert(arr, &j, 5);
 
-    QQmlApplicationEngine engine;
-    const QUrl url(QStringLiteral("qrc:/main.qml"));
-    engine.load(url);
-    timer.start();
-    Clear(tree);
+    ArrayTraverse(arr, printArr);
 
-    return app.exec();
+
+
+    return 0;
 }

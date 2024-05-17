@@ -3,10 +3,10 @@
 
 #include <stdint.h>
 #include "Vector2D.h"
-#include "Utils.h"
+#include "../Utils.h"
 #define PI 3.14f
 
-typedef enum e_shape_type
+typedef enum
 {
     POLYGON,
     CIRCLE,
@@ -14,32 +14,32 @@ typedef enum e_shape_type
     CAPSULE
 } ShapeType;
 
-typedef struct shape_2d
+typedef struct
 {
     ShapeType type;
     void* define;
 } Shape2D;
 
-typedef struct polygon
+typedef struct
 {
     Vec2* points;
     size_t count;
 } Polygon;
 
-typedef struct circle
+typedef struct
 {
     Vec2 center;
     float radius;
 } Circle;
 
-typedef struct ellipse
+typedef struct
 {
     Vec2 center;
     float a;
     float b;
 } Ellipse;
 
-typedef struct capsule
+typedef struct
 {
     Vec2 center;
     float height;

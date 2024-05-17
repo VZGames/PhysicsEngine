@@ -3,7 +3,7 @@
 
 #include "Vector2D.h"
 
-typedef struct rectangle_2d{
+typedef struct{
     Vec2 A; // Top-Left
     Vec2 C; // Bottom-Right
 } Rect2D;

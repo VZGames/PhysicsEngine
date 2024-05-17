@@ -1,7 +1,6 @@
 #include "Body2D.h"
 #include <stdio.h>
-#include <cstdlib>
-#include <cstring>
+#include <string.h>
 #include <Math/Shape2D.h>
 
 Body2D* CreateBody(World2D *w, Body2D* define)
@@ -52,8 +51,8 @@ void SetTransform(Body2D* target, float x, float y, float angle)
 {
     target->transform.x   = x;
     target->transform.y   = y;
-    target->transform.cos = cos(angle);
-    target->transform.sin = sin(angle);
+    target->transform.cos = cosf(angle);
+    target->transform.sin = sinf(angle);
 }
 
 Shape2D GetShape(Body2D* body)

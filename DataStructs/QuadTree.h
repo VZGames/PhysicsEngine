@@ -4,10 +4,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "Math/Rect2D.h"
-#include "DataStructs/DoublyLinkedList.h"
+#include "DataStructs/Array1D.h"
 #include "Body2D.h"
 
-typedef enum quad_tree_node: int
+typedef enum
 {
     WestNorth,
     EastNorth,
@@ -19,22 +19,22 @@ typedef enum quad_tree_node: int
 struct QuadTree
 {
     Rect2D rect; // boundary
-    List* objects; // list of objects
-    QuadTree* nodes[QuadtreeNode::NodeLimit]; // list of nodes
+    struct Array1D* objects; // list of objects
+    struct QuadTree* nodes[NodeLimit]; // list of nodes
 };
 
-int hash(QuadTree* node, float x, float y); // get cell index
-QuadTree* CreateQuadTreeNode(float width, float height)
+int QuadTreehash(struct QuadTree* node, float x, float y); // get cell index
+struct QuadTree* CreateQuadTreeNode(float width, float height)
 {
-    QuadTree* node = (QuadTree*)malloc(sizeof(QuadTree));
-    node->objects = CreateList();
+    struct QuadTree* node = (struct QuadTree*)malloc(sizeof(struct QuadTree));
+    node->objects = CreateArray1D();
     node->rect.A = (Vec2){0, 0};
     node->rect.C = (Vec2){width, height};
     Vec2 size = subtract(node->rect.C, node->rect.A);
 
-    for (int i = QuadtreeNode::WestNorth; i < QuadtreeNode::NodeLimit; i++)
+    for (int i = WestNorth; i < NodeLimit; i++)
     {
-        node->nodes[i] = (QuadTree*)malloc(sizeof(QuadTree));
+        node->nodes[i] = (struct QuadTree*)malloc(sizeof(struct QuadTree));
     }
 
     if (node->nodes[WestNorth] != NULL)
@@ -68,22 +68,22 @@ QuadTree* CreateQuadTreeNode(float width, float height)
     return node;
 }
 
-void Insert(QuadTree* node, void* obj)
+void QuadtreeInsert(struct QuadTree* node, void* obj)
 {
     if (node == NULL) return;
     if (obj == NULL) return;
     Body2D* body = (Body2D*)obj;
-    int index = hash(node, body->position.x, body->position.y);
-    Insert(node->nodes[(QuadtreeNode)index], NULL); // have not anchor yet
+    int index = QuadTreehash(node, body->position.x, body->position.y);
+    QuadtreeInsert(node->nodes[(QuadtreeNode)index], NULL); // have not anchor yet
 }
 
-int hash(QuadTree* node, float x, float y) // get cell index
+int QuadTreehash(struct QuadTree* node, float x, float y) // get cell index
 {
     Vec2 size = subtract(node->rect.C, node->rect.A);
     int columns = 2;
     int rows = 2;
-    int hashX = ((x - node->rect.A.x) / (size.x / 2.0f));
-    int hashY = ((y - node->rect.A.y) / (size.y / 2.0f));
+    int hashX = (int)((x - node->rect.A.x) / (size.x / 2.0f));
+    int hashY = (int)((y - node->rect.A.y) / (size.y / 2.0f));
     if(hashX < 0) hashX = 0;
     if(hashX > columns) hashX = columns - 1;
     if(hashY < 0) hashY = 0;
@@ -91,12 +91,12 @@ int hash(QuadTree* node, float x, float y) // get cell index
     return ((hashY * columns) + hashX);
 }
 
-void Clear(QuadTree* node)
+void QuadTreeClear(struct QuadTree* node)
 {
 //    if (node != NULL)
 //    {
 //        // Clear all nodes
-//        for (int i = QuadtreeNode::WestNorth; i < QuadtreeNode::NodeLimit; i++)
+//        for (int i = WestNorth; i < NodeLimit; i++)
 //        {
 //            Clear(node->nodes[i]);
 //            free(node->nodes[i]);
@@ -113,13 +113,12 @@ void Clear(QuadTree* node)
 //        free(node->objects[i]);
 //    }
 
-    Clear(node->objects);
+    Array1DClear(node->objects);
 }
 
-bool IsContain(QuadTree* node, void* obj)
+bool IsContain(struct QuadTree* node, void* obj)
 {
-
+    return true;
 }
-
 
 #endif // QUADTREE_H
