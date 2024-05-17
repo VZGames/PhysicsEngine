@@ -35,6 +35,24 @@ void Push(Array1D* arr, void* el)
     arr->used++;
 }
 
+void Insert(Array1D* arr, void* el, size_t index)
+{
+    if (index < arr->size)
+    {
+        for (size_t i = arr->size; i > index; i--) {
+            arr->array[i] = arr->array[i - 1];
+        }
+        arr->array[index] = el;
+    }
+    else
+    {
+        arr->size += 5;
+        arr->array  = (void**)realloc(arr->array, arr->size);
+    }
+
+    arr->used++;
+}
+
 void Delete(Array1D* arr, size_t index)
 {
     for (size_t i = index; i < arr->size; ++i) {
