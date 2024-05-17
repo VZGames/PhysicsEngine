@@ -6,7 +6,7 @@
 
 struct Array1D
 {
-    void** array;
+    void* (*array);
     size_t capacity;
     size_t size;
 };
@@ -16,7 +16,7 @@ struct Array1D* CreateArray1D()
     struct Array1D* arr = (struct Array1D*)malloc(sizeof(struct Array1D));
     arr->size = 0;
     arr->capacity = 5;
-    arr->array = (void*)malloc(sizeof(void*) * arr->capacity);
+    arr->array = malloc(sizeof(void*) * arr->capacity);
     return arr;
 }
 
@@ -27,18 +27,24 @@ size_t ArrayTotalSize(struct Array1D* arr)
 
 void Array1DPush(struct Array1D* arr, void* el)
 {
-    if (arr->size > arr->capacity)
+    if (arr->size == arr->capacity)
     {
         arr->capacity += 5;
-        arr->array  = (void*)realloc(arr->array, (sizeof(void*) * arr->capacity));
+        void** temp = realloc(arr->array, (sizeof(void*) * arr->capacity));
+        if (!temp)
+        {
+            fprintf(stderr, "ERROR: Couldn't realloc memory!\n");
+            return;
+        }
+        arr->array  =  temp;
     }
+
     arr->array[arr->size] = el;
     arr->size++;
 }
 
 void Array1DInsert(struct Array1D* arr, void* el, size_t index)
 {
-    printf("-------%llud %llud\n", index, arr->size);
     if (index < arr->size)
     {
         for (size_t i = arr->capacity; i > index; i--) {
@@ -62,7 +68,7 @@ void Array1DDelete(struct Array1D* arr, size_t index)
     arr->size--;
     arr->capacity--;
 
-    arr->array = (void**)realloc(arr->array, arr->capacity);
+    arr->array = (void*)realloc(arr->array, (sizeof(void*) * arr->capacity));
 }
 
 void Array1DClear(struct Array1D* arr)

@@ -57,7 +57,7 @@ int main()
     float circle_area = GetShapeArea(shapeA);
     float polygon_area = GetShapeArea(shapeB);
 
-    struct QuadTree* tree = CreateQuadTreeNode(world->w, world->h);
+//    struct QuadTree* tree = CreateQuadTreeNode(world->w, world->h);
 //    QuadtreeInsert(tree, &objA);
 //    QuadtreeInsert(tree, &objB);
 
@@ -69,9 +69,12 @@ int main()
         Array1DPush(arr, &k[i]);
     }
 
-    Array1DInsert(arr, &j, 5);
+    Array1DInsert(arr, &j, 8);
 
     ArrayTraverse(arr, printArr);
+
+
+    Array1DClear(arr);
 
 
 
