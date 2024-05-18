@@ -61,6 +61,7 @@ int main()
     struct QuadTree* tree = CreateQuadTreeNode(world->w, world->h);
     QuadtreeInsert(tree, &objA, &objA->position);
     QuadtreeInsert(tree, &objB, &objB->position);
+
     QuadTreeClear(tree);
     DestroyWorld(world);
 

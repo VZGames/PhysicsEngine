@@ -20,11 +20,11 @@ void QuadtreeInsert(struct QuadTree *node, void *obj, Vec2* position)
 {
     if (node == NULL || obj == NULL || position == NULL) return;
     Vec2 size = subtract(node->rect.C, node->rect.A);
-
     if ((size.x * size.y) > MIN_BODY_SIZE)
     {
         QuadtreeNode index = (QuadtreeNode)QuadTreehash(node, position->x, position->y);
         node->nodes[index] = CreateQuadTreeNode(size.x/2, size.y/2);
+        printf("%p %f %f %d\n", node, size.x, size.y, (int)index);
         switch (index) {
         case WestNorth:
         {
@@ -82,27 +82,17 @@ int QuadTreehash(struct QuadTree *node, float x, float y)
 
 void QuadTreeClear(struct QuadTree *node)
 {
-    //    if (node != NULL)
-    //    {
-    //        // Clear all nodes
-    //        for (int i = WestNorth; i < NodeLimit; i++)
-    //        {
-    //            Clear(node->nodes[i]);
-    //            free(node->nodes[i]);
-    //            node->nodes[i] = 0;
-    //        }
-    //        free(node);
-    //        node = NULL;
-    //    }
-
-    // Clear current Quadtree
-    //    for (int i = 0; i < (int)node->numOfObjects; i++)
-    //    {
-    //        if (node->objects[i] == NULL) continue;
-    //        free(node->objects[i]);
-    //    }
-
-    Array1DClear(node->objects);
+    if (node != NULL)
+    {
+        // Clear all nodes
+        for (int i = WestNorth; i < NodeLimit; i++)
+        {
+            QuadTreeClear(node->nodes[i]);
+        }
+        Array1DClear(node->objects);
+        free(node);
+        node = NULL;
+    }
 }
 
 bool QuadTreeInclude(struct QuadTree *node, void *obj)
