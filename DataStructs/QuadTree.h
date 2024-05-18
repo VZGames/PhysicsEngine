@@ -6,10 +6,10 @@
 
 typedef enum
 {
-    WestNorth,
-    EastNorth,
-    EastSouth,
-    WestSouth,
+    WestNorth,// TOP-LEFT (1)
+    EastNorth,// TOP-RIGHT (2)
+    WestSouth,// BOTTOM-LEFT (3)
+    EastSouth,// BOTTOM-RIGHT (4)
     NodeLimit
 } QuadtreeNode;
 
