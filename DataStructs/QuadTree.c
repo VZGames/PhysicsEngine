@@ -8,41 +8,46 @@ struct QuadTree *CreateQuadTreeNode(float width, float height)
     node->objects = CreateArray1D();
     node->rect.A = (Vec2){0, 0};
     node->rect.C = (Vec2){width, height};
-    Vec2 size = subtract(node->rect.C, node->rect.A);
+    node->nodes[WestNorth] = NULL;
+    node->nodes[EastNorth] = NULL;
+    node->nodes[EastSouth] = NULL;
+    node->nodes[WestSouth] = NULL;
 
-    for (int i = WestNorth; i < NodeLimit; i++)
-    {
-        node->nodes[i] = (struct QuadTree*)malloc(sizeof(struct QuadTree));
-    }
+//    Vec2 size = subtract(node->rect.C, node->rect.A);
 
-    if (node->nodes[WestNorth] != NULL)
-    {
-        node->nodes[WestNorth]->rect.A.x    =  node->rect.A.x;
-        node->nodes[WestNorth]->rect.A.y    =  node->rect.A.y;
-        node->nodes[WestNorth]->rect.C.x    =  node->rect.A.x + size.x/2;
-        node->nodes[WestNorth]->rect.C.y    =  node->rect.A.y + size.y/2;
-    }
-    if (node->nodes[EastNorth] != NULL)
-    {
-        node->nodes[EastNorth]->rect.A.x    =  node->rect.A.x + size.x/2;
-        node->nodes[EastNorth]->rect.A.y    =  node->rect.A.y;
-        node->nodes[EastNorth]->rect.C.x    =  node->rect.A.x + size.x;
-        node->nodes[EastNorth]->rect.C.y    =  node->rect.A.y + size.y/2;
-    }
-    if (node->nodes[EastSouth] != NULL)
-    {
-        node->nodes[EastSouth]->rect.A.x    =  node->rect.A.x;
-        node->nodes[EastSouth]->rect.A.y    =  node->rect.A.y + size.y/2;
-        node->nodes[EastSouth]->rect.C.x    =  node->rect.A.x + size.x/2;
-        node->nodes[EastSouth]->rect.C.y    =  node->rect.A.y + size.y;
-    }
-    if (node->nodes[WestSouth] != NULL)
-    {
-        node->nodes[WestSouth]->rect.A.x    =  node->rect.A.x + size.x/2;
-        node->nodes[WestSouth]->rect.A.y    =  node->rect.A.y + size.y/2;
-        node->nodes[WestSouth]->rect.C.x    =  node->rect.C.x;
-        node->nodes[WestSouth]->rect.C.y    =  node->rect.C.y;
-    }
+//    for (int i = WestNorth; i < NodeLimit; i++)
+//    {
+//        node->nodes[i] = (struct QuadTree*)malloc(sizeof(struct QuadTree));
+//    }
+
+//    if (node->nodes[WestNorth] != NULL)
+//    {
+//        node->nodes[WestNorth]->rect.A.x    =  node->rect.A.x;
+//        node->nodes[WestNorth]->rect.A.y    =  node->rect.A.y;
+//        node->nodes[WestNorth]->rect.C.x    =  node->rect.A.x + size.x/2;
+//        node->nodes[WestNorth]->rect.C.y    =  node->rect.A.y + size.y/2;
+//    }
+//    if (node->nodes[EastNorth] != NULL)
+//    {
+//        node->nodes[EastNorth]->rect.A.x    =  node->rect.A.x + size.x/2;
+//        node->nodes[EastNorth]->rect.A.y    =  node->rect.A.y;
+//        node->nodes[EastNorth]->rect.C.x    =  node->rect.A.x + size.x;
+//        node->nodes[EastNorth]->rect.C.y    =  node->rect.A.y + size.y/2;
+//    }
+//    if (node->nodes[EastSouth] != NULL)
+//    {
+//        node->nodes[EastSouth]->rect.A.x    =  node->rect.A.x;
+//        node->nodes[EastSouth]->rect.A.y    =  node->rect.A.y + size.y/2;
+//        node->nodes[EastSouth]->rect.C.x    =  node->rect.A.x + size.x/2;
+//        node->nodes[EastSouth]->rect.C.y    =  node->rect.A.y + size.y;
+//    }
+//    if (node->nodes[WestSouth] != NULL)
+//    {
+//        node->nodes[WestSouth]->rect.A.x    =  node->rect.A.x + size.x/2;
+//        node->nodes[WestSouth]->rect.A.y    =  node->rect.A.y + size.y/2;
+//        node->nodes[WestSouth]->rect.C.x    =  node->rect.C.x;
+//        node->nodes[WestSouth]->rect.C.y    =  node->rect.C.y;
+//    }
     return node;
 }
 
@@ -93,7 +98,7 @@ void QuadTreeClear(struct QuadTree *node)
     Array1DClear(node->objects);
 }
 
-bool IsContain(struct QuadTree *node, void *obj)
+bool QuadTreeInclude(struct QuadTree *node, void *obj)
 {
     return true;
 }

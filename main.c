@@ -2,7 +2,6 @@
 #include "World2D.h"
 #include "Body2D.h"
 #include "DataStructs/QuadTree.h"
-#include "DataStructs/Array1D.h"
 
 void printList(void* data)
 {

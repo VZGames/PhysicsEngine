@@ -77,5 +77,5 @@ float GetShapeArea(Shape2D shape)
     default:
         break;
     }
-    return absf(area);
+    return fabsf(area);
 }

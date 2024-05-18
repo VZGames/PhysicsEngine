@@ -1,6 +1,7 @@
 #include "World2D.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 World2D *CreateWorld(float g, unsigned char w, unsigned char h)
 {
@@ -9,6 +10,8 @@ World2D *CreateWorld(float g, unsigned char w, unsigned char h)
     world->w = w;
     world->h = h;
     world->bodyBitset = (bool*)calloc(MAX_BODY, sizeof(bool));
+
+    printf("Hello World!\n");
     return world;
 }
 

@@ -24,6 +24,6 @@ struct QuadTree* CreateQuadTreeNode(float width, float height);
 int QuadTreehash(struct QuadTree* node, float x, float y); // get cell index
 void QuadtreeInsert(struct QuadTree* node, void* obj, Vec2* position);
 void QuadTreeClear(struct QuadTree* node);
-bool IsContain(struct QuadTree* node, void* obj);
+bool QuadTreeInclude(struct QuadTree* node, void* obj);
 
 #endif // QUADTREE_H
