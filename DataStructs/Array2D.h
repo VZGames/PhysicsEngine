@@ -7,14 +7,14 @@ typedef struct
 {
     size_t w;
     size_t h;
-    void* data;
+    void** data;
 } Array2D;
 
-void CreateArray2D(Array2D* m, size_t w, size_t h);
-int Array2DIndexAt(Array2D* m, unsigned int x, unsigned int y);
-void* Array2DItemAt(Array2D* m, unsigned int x, unsigned int y);
-inline size_t Array2DTotalCells(Array2D* m) { return (m->h * m->h); }
-inline void Array2DClear(Array2D* m) { free(m); }
+Array2D* CreateArray2D(size_t w, size_t h);
+int Array2DIndexAt(Array2D* arr, unsigned int x, unsigned int y);
+void* Array2DItemAt(Array2D* arr, unsigned int x, unsigned int y);
+void Array2DClear(Array2D* arr);
+inline size_t Array2DTotalCells(Array2D* arr) { return (arr->h * arr->h); }
 
 
 #endif // MATRIX2D_H

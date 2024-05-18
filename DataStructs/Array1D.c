@@ -61,3 +61,13 @@ void ArrayTraverse(Array1D *arr, void (*cb)(void *))
         cb(arr->array[i]);
     }
 }
+
+void Array1DClear(Array1D *arr)
+{
+    if (arr != NULL)
+    {
+        free(arr->array);
+        free(arr);
+        arr = NULL;
+    }
+}

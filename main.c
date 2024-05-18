@@ -62,20 +62,6 @@ int main()
     struct QuadTree* tree = CreateQuadTreeNode(world->w, world->h);
     QuadtreeInsert(tree, &objA, &objA->position);
     QuadtreeInsert(tree, &objB, &objB->position);
-
-    int k[7] = {3, 5, 0, 1, 9, 8, 2};
-    int j = 4;
-    Array1D* arr = CreateArray1D();
-    for (size_t i = 0; i < sizeof(k)/sizeof(int); ++i) {
-        Array1DPush(arr, &k[i]);
-    }
-
-    Array1DInsert(arr, &j, 6);
-
-    ArrayTraverse(arr, printArr);
-
-
-    Array1DClear(arr);
     QuadTreeClear(tree);
     DestroyWorld(world);
 
