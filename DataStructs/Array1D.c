@@ -11,7 +11,7 @@ Array1D *CreateArray1D()
 
 void Array1DPush(Array1D *arr, void *el)
 {
-    if (arr->size == arr->capacity)
+    if (arr->size >= arr->capacity)
     {
         arr->capacity += 5;
         void** temp = realloc(arr->array, (sizeof(void*) * arr->capacity));

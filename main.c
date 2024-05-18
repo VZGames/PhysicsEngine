@@ -79,6 +79,7 @@ int main()
 
     Array1DClear(arr);
 
+    DestroyWorld(world);
 
 
     return 0;

@@ -47,13 +47,9 @@ typedef struct
 
 
 Polygon *CreatePolygon(Vec2 *vertices, size_t count);
-
 Circle *CreateCircle(Vec2 center, float radius);
-
 Ellipse *CreateEllipse(Vec2 center, float a, float b);
-
 Capsule *CreateCapsule(Vec2 center, float height, float radius);
-
 float GetShapeArea(Shape2D shape);
 
 
