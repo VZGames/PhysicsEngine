@@ -1,26 +1,6 @@
-#ifndef DOUBLYLINKEDLIST_H
-#define DOUBLYLINKEDLIST_H
+#include "List.h"
 
-#include <stdlib.h>
-#include <stdio.h>
-
-typedef void (*TaskFnc)(void*);
-
-struct Node
-{
-    void* data;
-    struct Node *next;
-    struct Node *prev;
-};
-
-struct List
-{
-    struct Node* head;
-    struct Node* tail;
-    size_t size;
-};
-
-struct List* CreateList()
+struct List *CreateList()
 {
     struct List* list = (struct List*)malloc(sizeof(struct List));
     list->head = NULL;
@@ -30,7 +10,7 @@ struct List* CreateList()
     return list;
 }
 
-void ListClear(struct List* list)
+void ListClear(struct List *list)
 {
     struct Node* head = list->head;
     while (head != NULL) {
@@ -41,7 +21,7 @@ void ListClear(struct List* list)
     list->size = 0;
 }
 
-void ListPushBack(struct List* list, void* data)
+void ListPushBack(struct List *list, void *data)
 {
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
     newNode->data = data;
@@ -62,7 +42,7 @@ void ListPushBack(struct List* list, void* data)
     list->size++;
 }
 
-void ListPushFront(struct List* list, void* data)
+void ListPushFront(struct List *list, void *data)
 {
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
     newNode->data = data;
@@ -78,7 +58,7 @@ void ListPushFront(struct List* list, void* data)
     list->size++;
 }
 
-void* ListElementAt(struct List* list, size_t index)
+void *ListElementAt(struct List *list, size_t index)
 {
     struct Node* node = list->head;
     if (index >= list->size)
@@ -104,7 +84,7 @@ void* ListElementAt(struct List* list, size_t index)
     return node->data;
 }
 
-void ListTraverse(struct List* list, TaskFnc cb)
+void ListTraverse(struct List *list, TaskFnc cb)
 {
     struct Node* node = list->head;
     while (node != NULL) {
@@ -113,5 +93,3 @@ void ListTraverse(struct List* list, TaskFnc cb)
         node = next;
     }
 }
-
-#endif // DOUBLYLINKEDLIST_H
