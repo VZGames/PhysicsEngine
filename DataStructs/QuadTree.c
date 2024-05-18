@@ -19,6 +19,7 @@ struct QuadTree *CreateQuadTreeNode(float width, float height)
 void QuadtreeInsert(struct QuadTree *node, void *obj, const Vec2* position, const Rect2D* objBoundary)
 {
     if (node == NULL || obj == NULL || position == NULL) return;
+    if (!QuadTreeInclude(node, objBoundary)) return;
     Vec2 size = subtract(node->rect.C, node->rect.A);
     if ((size.x * size.y) > MIN_BODY_SIZE)
     {
