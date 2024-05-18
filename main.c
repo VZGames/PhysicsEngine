@@ -35,7 +35,7 @@ int main()
     Circle* circle = CreateCircle((Vec2) {0.0f, 0.0f}, 3.0f);
 
     Vec2 verties[6] = {
-                           (Vec2) { 0.0f, 0.0f},
+        (Vec2) { 0.0f, 0.0f},
         (Vec2) { 0.5f, -0.5f},
         (Vec2) { 1.0f, 0.0f},
         (Vec2) { 1.0f, 1.0f},
