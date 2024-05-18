@@ -59,8 +59,8 @@ int main()
     (void)polygon_area;
 
     struct QuadTree* tree = CreateQuadTreeNode(world->w, world->h);
-    QuadtreeInsert(tree, &objA, &objA->position);
-    QuadtreeInsert(tree, &objB, &objB->position);
+    QuadtreeInsert(tree, &objA, &objA->position, &objA->shape.boundary);
+    QuadtreeInsert(tree, &objB, &objB->position, &objB->shape.boundary);
 
     QuadTreeClear(tree);
     DestroyWorld(world);

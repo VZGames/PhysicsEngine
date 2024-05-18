@@ -58,7 +58,7 @@ void Array2DInsert(Array2D *arr, int cellIndex, void *el)
 
 Vec2 Array2DCoordIndex(Array2D *arr, int cellIndex)
 {
-    int x = (cellIndex % arr->w);
-    int y = (cellIndex / arr->w);
+    size_t x = (cellIndex % arr->w);
+    size_t y = (cellIndex / arr->w);
     return (Vec2) { (float)x, (float)y };
 }

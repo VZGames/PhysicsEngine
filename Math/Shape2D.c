@@ -79,3 +79,59 @@ float GetShapeArea(Shape2D shape)
     }
     return fabsf(area);
 }
+
+void GetCircleBoundary(Rect2D *rect, Circle *circle)
+{
+    rect->A.x = circle->center.x - circle->radius;
+    rect->A.y = circle->center.y - circle->radius;
+    rect->C.x = circle->center.x + circle->radius;
+    rect->C.y = circle->center.y + circle->radius;
+}
+
+void GetPolygonBoundary(Rect2D *rect, Polygon *polygon)
+{
+    float minX = polygon->points[0].x;
+    float minY = polygon->points[0].y;
+    float maxX = polygon->points[0].x;
+    float maxY = polygon->points[0].y;
+
+    for (size_t i = 1; i < polygon->count; ++i) {
+        if (minX > polygon->points[i].x)
+        {
+            minX = polygon->points[i].x;
+        }
+        if (maxX < polygon->points[i].x)
+        {
+            maxX = polygon->points[i].x;
+        }
+        if (minY > polygon->points[i].y)
+        {
+            minY = polygon->points[i].y;
+        }
+        if (maxY < polygon->points[i].y)
+        {
+            maxY = polygon->points[i].y;
+        }
+    }
+
+    rect->A.x = minX;
+    rect->A.y = minY;
+    rect->C.x = maxX;
+    rect->C.y = maxY;
+}
+
+void GetEllipseBoundary(Rect2D *rect, Ellipse *ellipse)
+{
+    rect->A.x = ellipse->center.x - ellipse->a;
+    rect->A.y = ellipse->center.y - ellipse->b;
+    rect->C.x = ellipse->center.x + ellipse->a;
+    rect->C.y = ellipse->center.y + ellipse->b;
+}
+
+void GetCapsuleBoundary(Rect2D *rect, Capsule *capsule)
+{
+    rect->A.x = capsule->center.x - capsule->radius;
+    rect->A.y = capsule->center.y - capsule->height / 2.0f;
+    rect->C.x = capsule->center.x + capsule->radius;
+    rect->C.y = capsule->center.y + capsule->height / 2.0f;
+}

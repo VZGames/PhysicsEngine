@@ -16,7 +16,7 @@ struct QuadTree *CreateQuadTreeNode(float width, float height)
     return node;
 }
 
-void QuadtreeInsert(struct QuadTree *node, void *obj, Vec2* position)
+void QuadtreeInsert(struct QuadTree *node, void *obj, const Vec2* position, const Rect2D* objBoundary)
 {
     if (node == NULL || obj == NULL || position == NULL) return;
     Vec2 size = subtract(node->rect.C, node->rect.A);
@@ -28,10 +28,7 @@ void QuadtreeInsert(struct QuadTree *node, void *obj, Vec2* position)
         node->nodes[index]->rect.A.y    =  node->rect.A.y + (index / 2) * size.y/2;
         node->nodes[index]->rect.C.x    =  node->rect.A.x + (size.x/2) + (size.x/2) * (index % 2);
         node->nodes[index]->rect.C.y    =  node->rect.A.y + (size.y/2) + (size.y/2) * (index / 2);
-
-        printf("%p %f %f %d\n", node, size.x, size.y, index);
-        QuadtreeInsert(node->nodes[index], obj, position); // have not anchor yet
-
+        QuadtreeInsert(node->nodes[index], obj, position, objBoundary); // have not anchor yet
     }
 }
 
@@ -64,7 +61,7 @@ void QuadTreeClear(struct QuadTree *node)
     }
 }
 
-bool QuadTreeInclude(struct QuadTree *node, void *obj)
+bool QuadTreeInclude(struct QuadTree *node, const Rect2D* boundary)
 {
     return true;
 }
