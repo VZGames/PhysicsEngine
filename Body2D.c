@@ -1,7 +1,8 @@
 #include "Body2D.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
-#include <Math/Shape2D.h>
+#include "Math/Shape2D.h"
 
 Body2D* CreateBody(World2D *w, Body2D* define)
 {

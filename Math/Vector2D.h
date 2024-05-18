@@ -1,5 +1,5 @@
-#ifndef VECTOR2D_H
-#define VECTOR2D_H
+#ifndef Vec2_H
+#define Vec2_H
 
 #include <math.h>
 #include <stdbool.h>
@@ -21,7 +21,7 @@ inline Vec2 multiply(Vec2 A, Vec2 B){return (Vec2){ A.x * B.x, A.y * B.y };}
 
 inline Vec2 divide(Vec2 A, Vec2 B){return (Vec2){ A.x / B.x, A.y / B.y };}
 
-inline void scale(Vec2* vec, float n){(*vec) = divide((*vec), (Vec2){n, n});}
+inline void scale(Vec2 *vec, float n){(*vec) = divide((*vec), (Vec2){n, n});}
 
 inline float dot_product(Vec2 A, Vec2 B){return (A.x * B.x + A.y * B.y);}
 
@@ -49,4 +49,5 @@ inline Vec2 transform(Vec2 vec, Trans2D transform)
     };
 }
 
-#endif // VECTOR2D_H
+
+#endif // Vec2_H

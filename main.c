@@ -2,7 +2,7 @@
 
 #include "World2D.h"
 #include "Body2D.h"
-#include "DataStructs/QuadTree.h"
+//#include "DataStructs/QuadTree.h"
 #include "DataStructs/Array1D.h"
 
 void printList(void* data)
@@ -18,7 +18,7 @@ void printArr(void* data)
 
 int main()
 {
-    World2D* world = CreateWorld(9.8f, 5.0f, 3.0f);
+    World2D* world = CreateWorld(9.8f, 5, 3);
 
     Body2D bodyA;
     bodyA.type = STATIC_TYPE;
@@ -37,7 +37,7 @@ int main()
     Circle* circle = CreateCircle((Vec2) {0.0f, 0.0f}, 3.0f);
 
     Vec2 verties[6] = {
-        (Vec2) { 0.0f, 0.0f},
+                           (Vec2) { 0.0f, 0.0f},
         (Vec2) { 0.5f, -0.5f},
         (Vec2) { 1.0f, 0.0f},
         (Vec2) { 1.0f, 1.0f},
@@ -57,6 +57,9 @@ int main()
     float circle_area = GetShapeArea(shapeA);
     float polygon_area = GetShapeArea(shapeB);
 
+    (void)circle_area;
+    (void)polygon_area;
+
 //    struct QuadTree* tree = CreateQuadTreeNode(world->w, world->h);
 //    QuadtreeInsert(tree, &objA);
 //    QuadtreeInsert(tree, &objB);
@@ -64,7 +67,7 @@ int main()
 //    QuadTreeClear(tree);
     int k[7] = {3, 5, 0, 1, 9, 8, 2};
     int j = 4;
-    struct Array1D* arr = CreateArray1D();
+    Array1D* arr = CreateArray1D();
     for (size_t i = 0; i < sizeof(k)/sizeof(int); ++i) {
         Array1DPush(arr, &k[i]);
     }
