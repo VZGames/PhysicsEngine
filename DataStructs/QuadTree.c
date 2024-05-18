@@ -22,47 +22,16 @@ void QuadtreeInsert(struct QuadTree *node, void *obj, Vec2* position)
     Vec2 size = subtract(node->rect.C, node->rect.A);
     if ((size.x * size.y) > MIN_BODY_SIZE)
     {
-        QuadtreeNode index = (QuadtreeNode)QuadTreehash(node, position->x, position->y);
+        int index = QuadTreehash(node, position->x, position->y);
         node->nodes[index] = CreateQuadTreeNode(size.x/2, size.y/2);
-        printf("%p %f %f %d\n", node, size.x, size.y, (int)index);
-        switch (index) {
-        case WestNorth:
-        {
-            node->nodes[WestNorth]->rect.A.x    =  node->rect.A.x;
-            node->nodes[WestNorth]->rect.A.y    =  node->rect.A.y;
-            node->nodes[WestNorth]->rect.C.x    =  node->rect.A.x + size.x/2;
-            node->nodes[WestNorth]->rect.C.y    =  node->rect.A.y + size.y/2;
-            break;
-        }
-        case EastNorth:
-        {
-            node->nodes[EastNorth]->rect.A.x    =  node->rect.A.x + size.x/2;
-            node->nodes[EastNorth]->rect.A.y    =  node->rect.A.y;
-            node->nodes[EastNorth]->rect.C.x    =  node->rect.A.x + size.x;
-            node->nodes[EastNorth]->rect.C.y    =  node->rect.A.y + size.y/2;
-            break;
-        }
-        case WestSouth:
-        {
-            node->nodes[WestSouth]->rect.A.x    =  node->rect.A.x;
-            node->nodes[WestSouth]->rect.A.y    =  node->rect.A.y + size.y/2;
-            node->nodes[WestSouth]->rect.C.x    =  node->rect.A.x + size.x/2;
-            node->nodes[WestSouth]->rect.C.y    =  node->rect.A.y + size.y;
-            break;
-        }
-        case EastSouth:
-        {
-            node->nodes[EastSouth]->rect.A.x    =  node->rect.A.x + size.x/2;
-            node->nodes[EastSouth]->rect.A.y    =  node->rect.A.y + size.y/2;
-            node->nodes[EastSouth]->rect.C.x    =  node->rect.C.x;
-            node->nodes[EastSouth]->rect.C.y    =  node->rect.C.y;
-            break;
-        }
-        default:
-            break;
-        }
+        node->nodes[index]->rect.A.x    =  node->rect.A.x + (index % 2) * size.x/2;
+        node->nodes[index]->rect.A.y    =  node->rect.A.y + (index / 2) * size.y/2;
+        node->nodes[index]->rect.C.x    =  node->rect.A.x + (size.x/2) + (size.x/2) * (index % 2);
+        node->nodes[index]->rect.C.y    =  node->rect.A.y + (size.y/2) + (size.y/2) * (index / 2);
 
+        printf("%p %f %f %d\n", node, size.x, size.y, index);
         QuadtreeInsert(node->nodes[index], obj, position); // have not anchor yet
+
     }
 }
 
