@@ -33,4 +33,4 @@ HEADERS += \
 INCLUDEPATH += \
     $PWD/Math \
     $PWD/DataStructs \
-    $PWD
+    $PWD/

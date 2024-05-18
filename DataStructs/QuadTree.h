@@ -2,7 +2,7 @@
 #define QUADTREE_H
 
 #include "Math/Rect2D.h"
-#include "DataStructs/Array1D.h"
+#include "Array1D.h"
 
 typedef enum
 {

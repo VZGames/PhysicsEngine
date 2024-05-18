@@ -1,8 +1,7 @@
 #include <stdio.h>
-
 #include "World2D.h"
 #include "Body2D.h"
-//#include "DataStructs/QuadTree.h"
+#include "DataStructs/QuadTree.h"
 #include "DataStructs/Array1D.h"
 
 void printList(void* data)
@@ -60,11 +59,10 @@ int main()
     (void)circle_area;
     (void)polygon_area;
 
-//    struct QuadTree* tree = CreateQuadTreeNode(world->w, world->h);
-//    QuadtreeInsert(tree, &objA);
-//    QuadtreeInsert(tree, &objB);
+    struct QuadTree* tree = CreateQuadTreeNode(world->w, world->h);
+    QuadtreeInsert(tree, &objA, &objA->position);
+    QuadtreeInsert(tree, &objB, &objB->position);
 
-//    QuadTreeClear(tree);
     int k[7] = {3, 5, 0, 1, 9, 8, 2};
     int j = 4;
     Array1D* arr = CreateArray1D();
@@ -72,13 +70,13 @@ int main()
         Array1DPush(arr, &k[i]);
     }
 
-    Array1DInsert(arr, &j, 8);
+    Array1DInsert(arr, &j, 6);
 
     ArrayTraverse(arr, printArr);
 
 
     Array1DClear(arr);
-
+    QuadTreeClear(tree);
     DestroyWorld(world);
 
 

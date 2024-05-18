@@ -51,7 +51,7 @@ void QuadtreeInsert(struct QuadTree *node, void *obj, Vec2* position)
     if (node == NULL) return;
     if (obj == NULL) return;
     int index = QuadTreehash(node, position->x, position->y);
-    QuadtreeInsert(node->nodes[(QuadtreeNode)index], NULL, position); // have not anchor yet
+//    QuadtreeInsert(node->nodes[index], NULL, NULL); // have not anchor yet
 }
 
 int QuadTreehash(struct QuadTree *node, float x, float y)
