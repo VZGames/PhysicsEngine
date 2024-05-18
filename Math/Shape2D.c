@@ -1,5 +1,5 @@
 #include "Shape2D.h"
-#include "Utils.h"
+#include <stdlib.h>
 
 Polygon *CreatePolygon(Vec2 *vertices, size_t count)
 {

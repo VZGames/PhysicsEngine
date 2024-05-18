@@ -1,4 +1,6 @@
 #include "Array1D.h"
+#include <stdio.h>
+#include <stdlib.h>
 
 Array1D *CreateArray1D()
 {

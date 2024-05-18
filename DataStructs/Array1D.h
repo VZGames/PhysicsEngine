@@ -1,8 +1,6 @@
 #ifndef ARRAY1D_H
 #define ARRAY1D_H
 
-#include <stdio.h>
-#include <stdlib.h>
 
 typedef struct
 {
