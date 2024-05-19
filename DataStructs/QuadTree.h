@@ -15,15 +15,16 @@ typedef enum
 
 struct QuadTree
 {
+    char* name;
     Rect2D rect; // boundary
     Array1D* objects; // list of objects
     struct QuadTree* nodes[NodeLimit]; // list of nodes
 };
 
-struct QuadTree* CreateQuadTreeNode(float width, float height);
+struct QuadTree* CreateQuadTreeNode(char* name, float width, float height);
 int QuadTreehash(struct QuadTree* node, float x, float y); // get cell index
 void QuadtreeInsert(struct QuadTree* node, void* obj, const Vec2* position, const Rect2D* objBoundary);
 void QuadTreeClear(struct QuadTree* node);
-bool QuadTreeInclude(struct QuadTree* node, const Rect2D* boundary);
+bool QuadTreeAbsInclude(struct QuadTree* node, const Rect2D* boundary);
 
 #endif // QUADTREE_H

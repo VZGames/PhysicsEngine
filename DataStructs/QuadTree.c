@@ -3,9 +3,10 @@
 #include <stdio.h>
 #include "World2D.h"
 
-struct QuadTree *CreateQuadTreeNode(float width, float height)
+struct QuadTree *CreateQuadTreeNode(char* name, float width, float height)
 {
     struct QuadTree* node = (struct QuadTree*)malloc(sizeof(struct QuadTree));
+    node->name = name;
     node->objects = CreateArray1D();
     node->rect.A = (Vec2){0, 0};
     node->rect.C = (Vec2){width, height};
@@ -19,18 +20,28 @@ struct QuadTree *CreateQuadTreeNode(float width, float height)
 void QuadtreeInsert(struct QuadTree *node, void *obj, const Vec2* position, const Rect2D* objBoundary)
 {
     if (node == NULL || obj == NULL || position == NULL) return;
-    if (!QuadTreeInclude(node, objBoundary)) return;
     Vec2 size = subtract(node->rect.C, node->rect.A);
     if ((size.x * size.y) > MIN_BODY_SIZE)
     {
         int index = QuadTreehash(node, position->x, position->y);
-        node->nodes[index] = CreateQuadTreeNode(size.x/2, size.y/2);
+
+        char name[1024];
+        sprintf_s(&name[0], sizeof(name)/sizeof(char), "%s [%p] -> %d", node->name, node, index);
+        printf("%s %p\n", node->name, obj);
+
+        node->nodes[index] = CreateQuadTreeNode(name, size.x/2, size.y/2);
         node->nodes[index]->rect.A.x    =  node->rect.A.x + (index % 2) * size.x/2;
         node->nodes[index]->rect.A.y    =  node->rect.A.y + (index / 2) * size.y/2;
         node->nodes[index]->rect.C.x    =  node->rect.A.x + (size.x/2) + (size.x/2) * (index % 2);
         node->nodes[index]->rect.C.y    =  node->rect.A.y + (size.y/2) + (size.y/2) * (index / 2);
         QuadtreeInsert(node->nodes[index], obj, position, objBoundary); // have not anchor yet
+//        if (QuadTreeAbsInclude(node->nodes[index], objBoundary))
+//        {
+//            printf("Node: %p contain object %p\n", node, obj);
+//            //            Array1DPush(node->nodes[index]->objects, obj);
+//        }
     }
+
 }
 
 int QuadTreehash(struct QuadTree *node, float x, float y)
@@ -62,7 +73,7 @@ void QuadTreeClear(struct QuadTree *node)
     }
 }
 
-bool QuadTreeInclude(struct QuadTree *node, const Rect2D* boundary)
+bool QuadTreeAbsInclude(struct QuadTree *node, const Rect2D* boundary)
 {
     return !(boundary->C.x < node->rect.A.x ||
             boundary->C.y < node->rect.A.y ||

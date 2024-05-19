@@ -32,7 +32,7 @@ int main()
     bodyB.restitution = 0.3f;
     bodyB.position = (Vec2) {2.4f, 1.6f};
 
-    Circle* circle = CreateCircle((Vec2) {0.0f, 0.0f}, 3.0f);
+    Circle* circle = CreateCircle((Vec2) {0.0f, 0.0f}, 0.5f);
 
     Vec2 verties[6] = {
         (Vec2) { 0.0f, 0.0f},
@@ -58,9 +58,9 @@ int main()
     (void)circle_area;
     (void)polygon_area;
 
-    struct QuadTree* tree = CreateQuadTreeNode(world->w, world->h);
-    QuadtreeInsert(tree, &objA, &objA->position, &objA->shape.boundary);
-    QuadtreeInsert(tree, &objB, &objB->position, &objB->shape.boundary);
+    struct QuadTree* tree = CreateQuadTreeNode("Root", world->w, world->h);
+    QuadtreeInsert(tree, objA, &objA->position, &objA->shape.boundary);
+    QuadtreeInsert(tree, objB, &objB->position, &objB->shape.boundary);
 
     QuadTreeClear(tree);
     DestroyWorld(world);

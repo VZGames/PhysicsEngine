@@ -6,6 +6,11 @@
 World2D *CreateWorld(float g, unsigned char w, unsigned char h)
 {
     World2D* world = (World2D*)malloc(sizeof(World2D));
+    if (world == NULL)
+    {
+        fprintf(stderr, "ERROR: Couldn't realloc memory! line: %d\n", __LINE__);
+        return NULL;
+    }
     world->gravity = g;
     world->w = w;
     world->h = h;

@@ -11,6 +11,11 @@ Body2D* CreateBody(World2D *w, Body2D* define)
         {
             w->bodyBitset[i] = 1;
             Body2D* body = (Body2D*)malloc(sizeof(Body2D));
+            if (body == NULL)
+            {
+                fprintf(stderr, "ERROR: Couldn't realloc memory! line: %d\n", __LINE__);
+                return NULL;
+            }
             body->index                     = i;
             body->position                  = define->position;
             body->density                   = define->density;
@@ -22,6 +27,8 @@ Body2D* CreateBody(World2D *w, Body2D* define)
             body->type                      = define->type;
             body->shape                     = define->shape;
             w->bodies[i] = body;
+
+            printf("Hello Body %p\n", body);
             return body;
         }
     }
@@ -46,6 +53,12 @@ Shape2D CreateShapeForBody(Body2D* target, ShapeType type, void* define)
     default:
         break;
     }
+
+    target->shape.boundary.A.x += target->position.x;
+    target->shape.boundary.A.y += target->position.y;
+    target->shape.boundary.C.x += target->shape.boundary.A.x;
+    target->shape.boundary.C.y += target->shape.boundary.A.y;
+
     target->shape.define = define;
     target->shape.type = type;
     return target->shape;
