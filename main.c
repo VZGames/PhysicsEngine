@@ -3,20 +3,20 @@
 #include "Body2D.h"
 #include "DataStructs/QuadTree.h"
 
-void printList(void* data)
+void printList(void *data)
 {
-    Body2D* body = (Body2D*)data;
+    Body2D *body = (Body2D*)data;
     printf("idx: %d\n", body->index);
 }
 
-void printArr(void* data)
+void printArr(void *data)
 {
     printf("%d\n", *(int*)data);
 }
 
 int main()
 {
-    World2D* world = CreateWorld(9.8f, 5, 3);
+    World2D *world = CreateWorld(9.8f, 5, 3);
 
     Body2D bodyA;
     bodyA.type = STATIC_TYPE;
@@ -42,15 +42,15 @@ int main()
         (Vec2) { 0.5f, 1.5f},
         (Vec2) { 0.0f, 1.0f}
     };
-    Polygon* polygon = CreatePolygon(&verties[0], sizeof(verties)/sizeof(Vec2));
+    Polygon *polygon = CreatePolygon(&verties[0], sizeof(verties)/sizeof(Vec2));
 
 
 
-    Body2D* objA = CreateBody(world, &bodyA);
-    Body2D* objB = CreateBody(world, &bodyB);
+    Body2D *objA = CreateBody(world, &bodyA);
+    Body2D *objB = CreateBody(world, &bodyB);
 
-    Shape2D shapeA = BodyCreateShape(objA, CIRCLE, circle);
-    Shape2D shapeB = BodyCreateShape(objB, POLYGON, polygon);
+    Shape2D *shapeA = BodyCreateShape(objA, CIRCLE, circle);
+    Shape2D *shapeB = BodyCreateShape(objB, POLYGON, polygon);
 
     float circle_area = GetShapeArea(shapeA);
     float polygon_area = GetShapeArea(shapeB);

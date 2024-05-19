@@ -33,10 +33,9 @@ typedef struct
 } Body2D;
 
 Body2D* CreateBody(World2D* world, Body2D* define);
-Shape2D BodyCreateShape(Body2D* target, ShapeType type, void* define);
-Shape2D BodyGetShape(Body2D* body);
-Trans2D BodyGetTransform(Body2D* target);
-Vec2 BodyGetPosition(Body2D* body, int);
+Shape2D* BodyCreateShape(Body2D* target, ShapeType type, void* define);
+Shape2D* BodyGetShape(Body2D* body);
+Trans2D* BodyGetTransform(Body2D* target);
 void DestroyBody(World2D* world, Body2D* body);
 void BodySetTransform(Body2D* target, float x, float y, float angle);
 

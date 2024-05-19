@@ -57,6 +57,6 @@ void GetCircleBoundary(Rect2D *rect, Circle* circle);
 void GetPolygonBoundary(Rect2D *rect, Polygon* polygon);
 void GetEllipseBoundary(Rect2D *rect, Ellipse* ellipse);
 void GetCapsuleBoundary(Rect2D *rect, Capsule* capsule);
-float GetShapeArea(Shape2D shape);
+float GetShapeArea(const Shape2D* shape);
 
 #endif // SHAPE2D_H
