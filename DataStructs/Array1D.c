@@ -57,7 +57,7 @@ void Array1DDelete(Array1D *arr, size_t index)
     arr->array = (void*)realloc(arr->array, (sizeof(void*) * arr->capacity));
 }
 
-void ArrayTraverse(Array1D *arr, void (*cb)(void *))
+void Array1DTraverse(Array1D *arr, void (*cb)(void *))
 {
     for (int i = 0; i < arr->size; ++i) {
         cb(arr->array[i]);

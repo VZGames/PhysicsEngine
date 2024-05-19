@@ -49,8 +49,8 @@ int main()
     Body2D* objA = CreateBody(world, &bodyA);
     Body2D* objB = CreateBody(world, &bodyB);
 
-    Shape2D shapeA = CreateShapeForBody(objA, CIRCLE, circle);
-    Shape2D shapeB = CreateShapeForBody(objB, POLYGON, polygon);
+    Shape2D shapeA = BodyCreateShape(objA, CIRCLE, circle);
+    Shape2D shapeB = BodyCreateShape(objB, POLYGON, polygon);
 
     float circle_area = GetShapeArea(shapeA);
     float polygon_area = GetShapeArea(shapeB);
@@ -59,6 +59,7 @@ int main()
     (void)polygon_area;
 
     struct QuadTree* tree = CreateQuadTreeNode("Root", world->w, world->h);
+
     QuadtreeInsert(tree, objA, &objA->position, &objA->shape.boundary);
     QuadtreeInsert(tree, objB, &objB->position, &objB->shape.boundary);
 

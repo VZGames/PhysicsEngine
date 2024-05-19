@@ -11,31 +11,31 @@ typedef struct
     float y;
 } Vec2;
 
-inline Vec2 zero() { return (Vec2){0.0f, 0.0f}; }
+inline Vec2 Vec2Zero() { return (Vec2){0.0f, 0.0f}; }
 
-inline Vec2 add(Vec2 A, Vec2 B){return (Vec2){ A.x + B.x, A.y + B.y };}
+inline Vec2 Vec2Add(Vec2 A, Vec2 B){return (Vec2){ A.x + B.x, A.y + B.y };}
 
-inline Vec2 subtract(Vec2 A, Vec2 B){return (Vec2){ A.x - B.x, A.y - B.y };}
+inline Vec2 Vec2Subtract(Vec2 A, Vec2 B){return (Vec2){ A.x - B.x, A.y - B.y };}
 
-inline Vec2 multiply(Vec2 A, Vec2 B){return (Vec2){ A.x * B.x, A.y * B.y };}
+inline Vec2 Vec2Multiply(Vec2 A, Vec2 B){return (Vec2){ A.x * B.x, A.y * B.y };}
 
-inline Vec2 divide(Vec2 A, Vec2 B){return (Vec2){ A.x / B.x, A.y / B.y };}
+inline Vec2 Vec2Divide(Vec2 A, Vec2 B){return (Vec2){ A.x / B.x, A.y / B.y };}
 
-inline void scale(Vec2 *vec, float n){(*vec) = divide((*vec), (Vec2){n, n});}
+inline void Vec2cale(Vec2 *vec, float n){(*vec) = Vec2Divide((*vec), (Vec2){n, n});}
 
-inline float dot_product(Vec2 A, Vec2 B){return (A.x * B.x + A.y * B.y);}
+inline float Vec2DotProduct(Vec2 A, Vec2 B){return (A.x * B.x + A.y * B.y);}
 
-inline float cross_product(Vec2 A, Vec2 B){return (A.x * B.y - A.y * B.x);}
+inline float Vec2CrossProduct(Vec2 A, Vec2 B){return (A.x * B.y - A.y * B.x);}
 
-inline float magnitude(Vec2 vec){return sqrtf(vec.x * vec.x + vec.y * vec.y);}
+inline float Vec2Magnitude(Vec2 vec){return sqrtf(vec.x * vec.x + vec.y * vec.y);}
 
-inline float distance(Vec2 A, Vec2 B){ return sqrtf((B.x - A.x) * (B.x - A.x) + (B.y - A.y) * (B.y - A.y));}
+inline float Vec2Distance(Vec2 A, Vec2 B){ return sqrtf((B.x - A.x) * (B.x - A.x) + (B.y - A.y) * (B.y - A.y));}
 
-inline Vec2 normalize(Vec2 vec){return (Vec2) { vec.x / magnitude(vec), vec.y / magnitude(vec) };}
+inline Vec2 Vec2Normalize(Vec2 vec){return (Vec2) { vec.x / Vec2Magnitude(vec), vec.y / Vec2Magnitude(vec) };}
 
-inline bool equals(Vec2 A, Vec2 B) { return (A.x == B.x && A.y == B.y); }
+inline bool Vec2Equals(Vec2 A, Vec2 B) { return (A.x == B.x && A.y == B.y); }
 
-inline Vec2 transform(Vec2 vec, Trans2D transform)
+inline Vec2 Vec2Transform(Vec2 vec, Trans2D transform)
 {
     /**
      * Formula for rotating a vector in 2D

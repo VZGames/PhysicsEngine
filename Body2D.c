@@ -35,7 +35,7 @@ Body2D* CreateBody(World2D *w, Body2D* define)
     return NULL;
 }
 
-Shape2D CreateShapeForBody(Body2D* target, ShapeType type, void* define)
+Shape2D BodyCreateShape(Body2D* target, ShapeType type, void* define)
 {
     switch (type) {
     case CIRCLE:
@@ -54,8 +54,8 @@ Shape2D CreateShapeForBody(Body2D* target, ShapeType type, void* define)
         break;
     }
 
-    target->shape.boundary.A.x += target->position.x;
-    target->shape.boundary.A.y += target->position.y;
+    target->shape.boundary.A.x = target->position.x;
+    target->shape.boundary.A.y = target->position.y;
     target->shape.boundary.C.x += target->shape.boundary.A.x;
     target->shape.boundary.C.y += target->shape.boundary.A.y;
 
@@ -72,12 +72,12 @@ void DestroyBody(World2D* world, Body2D* body)
     free((void*)body);
 }
 
-Trans2D GetTransform(Body2D* target)
+Trans2D BodyGetTransform(Body2D* target)
 {
     return target->transform;
 }
 
-void SetTransform(Body2D* target, float x, float y, float angle)
+void BodySetTransform(Body2D* target, float x, float y, float angle)
 {
     target->transform.x   = x;
     target->transform.y   = y;
@@ -85,7 +85,26 @@ void SetTransform(Body2D* target, float x, float y, float angle)
     target->transform.sin = sinf(angle);
 }
 
-Shape2D GetShape(Body2D* body)
+Shape2D BodyGetShape(Body2D* body)
 {
     return body->shape;
+}
+
+Vec2 BodyGetPosition(Body2D *body, int i)
+{
+    switch (i) {
+    case 1:
+        return body->shape.boundary.A;
+    case -1:
+    {
+        Vec2 size = Vec2Subtract(body->shape.boundary.C, body->shape.boundary.A);
+        return (Vec2) { body->position.x + size.x / 2, body->position.y + size.y / 2};
+    }
+    default:
+    {
+        Vec2 size = Vec2Subtract(body->shape.boundary.C, body->shape.boundary.A);
+        return (Vec2) { body->position.x + size.x, body->position.y + size.y};
+    }
+    }
+    return Vec2Zero();
 }
