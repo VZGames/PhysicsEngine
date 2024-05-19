@@ -23,8 +23,9 @@ void QuadtreeInsert(struct QuadTree *node, void *obj, const Vec2* position, cons
 
     if (QuadTreeAbsInclude(node, objBoundary))
     {
-        printf("Node: %p contain object %p\n", node, obj);
+//        printf("Node: %p contain object %p\n", node, obj);
         Array1DPush(node->objects, obj);
+//        printf("Size of list objects is: %llu\n", Array1DTotalSize(node->objects));
     }
 
 //    Vec2 size = subtract(node->rect.C, node->rect.A);

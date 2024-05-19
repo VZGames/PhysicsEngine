@@ -2,9 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <time.h>
 
 World2D *CreateWorld(float g, unsigned char w, unsigned char h)
 {
+    srand((unsigned int)time(NULL));
     World2D* world = (World2D*)malloc(sizeof(World2D));
     if (world == NULL)
     {

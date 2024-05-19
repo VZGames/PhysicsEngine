@@ -25,6 +25,7 @@ HEADERS += \
     DataStructs/Array1D.h \
     DataStructs/Array2D.h \
     DataStructs/QuadTree.h \
+    Memory.h \
     Utils.h \
     Body2D.h \
     World2D.h

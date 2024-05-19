@@ -39,16 +39,16 @@ Shape2D *BodyCreateShape(Body2D* target, ShapeType type, void* define)
 {
     switch (type) {
     case CIRCLE:
-        GetCircleBoundary(&target->shape.boundary, (Circle*) define);
+        GetCircleBoundary(&target->shape.boundary, (Circle*)define);
         break;
     case POLYGON:
-        GetPolygonBoundary(&target->shape.boundary, (Polygon*) define);
+        GetPolygonBoundary(&target->shape.boundary, (Polygon*)define);
         break;
     case ELLIPSE:
-        GetEllipseBoundary(&target->shape.boundary, (Ellipse*) define);
+        GetEllipseBoundary(&target->shape.boundary, (Ellipse*)define);
         break;
     case CAPSULE:
-        GetCapsuleBoundary(&target->shape.boundary, (Capsule*) define);
+        GetCapsuleBoundary(&target->shape.boundary, (Capsule*)define);
         break;
     default:
         break;
@@ -70,7 +70,8 @@ void DestroyBody(World2D* world, Body2D* body)
 {
     world->bodyBitset[body->index] = 0;
     world->bodies[body->index] = NULL;
-    free((void*)body);
+    free(body);
+    body = NULL;
 }
 
 Trans2D* BodyGetTransform(Body2D* target)
