@@ -27,8 +27,6 @@ Body2D* CreateBody(World2D *w, Body2D* define)
             body->type                      = define->type;
             body->shape                     = define->shape;
             w->bodies[i] = body;
-
-            printf("Hello Body %p\n", body);
             return body;
         }
     }

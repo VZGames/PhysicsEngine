@@ -1,11 +1,16 @@
 #include "QuadTree.h"
 #include <stdlib.h>
 #include <stdio.h>
+#include <Body2D.h>
 
-struct QuadTree *CreateQuadTreeNode(char* name, float width, float height)
+void PrintObject(void* vobj)
+{
+    Body2D* obj = (Body2D*)vobj;
+    printf("Object: %p [%f, %f, %f, %f]\n", vobj, obj->shape.boundary.A.x, obj->shape.boundary.A.y, obj->shape.boundary.C.x, obj->shape.boundary.C.y);
+}
+struct QuadTree *CreateQuadTreeNode(float width, float height)
 {
     struct QuadTree* node = (struct QuadTree*)malloc(sizeof(struct QuadTree));
-    node->name = name;
     node->objects = CreateArray1D();
     node->rect.A = (Vec2){0, 0};
     node->rect.C = (Vec2){width, height};
@@ -17,39 +22,52 @@ struct QuadTree *CreateQuadTreeNode(char* name, float width, float height)
     return node;
 }
 
-void QuadtreeInsert(struct QuadTree *node, void *obj, const Vec2* position, const Rect2D* objBoundary)
+void QuadtreeInsert(struct QuadTree *node, void *obj, const Rect2D* objBoundary)
 {
-    if (node == NULL || obj == NULL || position == NULL) return;
-
-    if (QuadTreeAbsInclude(node, objBoundary))
-    {
-//        printf("Node: %p contain object %p\n", node, obj);
-        Array1DPush(node->objects, obj);
-//        printf("Size of list objects is: %llu\n", Array1DTotalSize(node->objects));
-    }
-
-//    Vec2 size = subtract(node->rect.C, node->rect.A);
-//    if (Array1DTotalSize(node->objects) > 2)
+    Vec2 size = Vec2Subtract(node->rect.C, node->rect.A);
+//    if (node != NULL)
 //    {
-//        int index = QuadTreehash(node, position->x, position->y);
+//        for (int i = WestNorth; i < NodeLimit; ++i) {
+//            if (node->nodes[i] == NULL)
+//            {
+//                node->nodes[i] = CreateQuadTreeNode(size.x/2, size.y/2);
+//                node->nodes[i]->rect.A.x    =  node->rect.A.x + (i % 2) * size.x/2;
+//                node->nodes[i]->rect.A.y    =  node->rect.A.y + (i / 2) * size.y/2;
+//                node->nodes[i]->rect.C.x    =  node->rect.A.x + (size.x/2) + (size.x/2) * (i % 2);
+//                node->nodes[i]->rect.C.y    =  node->rect.A.y + (size.y/2) + (size.y/2) * (i / 2);
+//            }
 
-//        char name[1024];
-//        sprintf_s(&name[0], sizeof(name)/sizeof(char), "%s [%p] -> %d", node->name, node, index);
-//        printf("%s %p\n", node->name, obj);
-
-//        node->nodes[index] = CreateQuadTreeNode(name, size.x/2, size.y/2);
-//        node->nodes[index]->rect.A.x    =  node->rect.A.x + (index % 2) * size.x/2;
-//        node->nodes[index]->rect.A.y    =  node->rect.A.y + (index / 2) * size.y/2;
-//        node->nodes[index]->rect.C.x    =  node->rect.A.x + (size.x/2) + (size.x/2) * (index % 2);
-//        node->nodes[index]->rect.C.y    =  node->rect.A.y + (size.y/2) + (size.y/2) * (index / 2);
-//        QuadtreeInsert(node->nodes[index], obj, position, objBoundary); // have not anchor yet
-//        //        if (QuadTreeAbsInclude(node->nodes[index], objBoundary))
-//        //        {
-//        //            printf("Node: %p contain object %p\n", node, obj);
-//        //            //            Array1DPush(node->nodes[index]->objects, obj);
-//        //        }
+//            if (QuadTreeAbsInclude(node->nodes[i], objBoundary))
+//            {
+//                QuadtreeInsert(node->nodes[i], obj, objBoundary);
+//            }
+//        }
+//        return;
 //    }
 
+    if (node == NULL) return;
+    if (QuadTreeAbsInclude(node, objBoundary))
+    {
+        Array1DPush(node->objects, obj);
+    }
+
+    if (Array1DTotalSize(node->objects) > 2)
+    {
+        for (int i = WestNorth; i < NodeLimit; ++i) {
+            if (node->nodes[i] == NULL)
+            {
+                node->nodes[i] = CreateQuadTreeNode(size.x/2, size.y/2);
+                node->nodes[i]->rect.A.x    =  node->rect.A.x + (i % 2) * size.x/2;
+                node->nodes[i]->rect.A.y    =  node->rect.A.y + (i / 2) * size.y/2;
+                node->nodes[i]->rect.C.x    =  node->rect.A.x + (size.x/2) + (size.x/2) * (i % 2);
+                node->nodes[i]->rect.C.y    =  node->rect.A.y + (size.y/2) + (size.y/2) * (i / 2);
+            }
+            QuadtreeInsert(node->nodes[i], obj, objBoundary);
+        }
+    }
+    printf("Boundary [%f %f %f %f] include %llu objects\n", node->rect.A.x, node->rect.A.y, node->rect.C.x, node->rect.C.y, Array1DTotalSize(node->objects));
+    Array1DTraverse(node->objects, PrintObject);
+    printf("\n");
 }
 
 int QuadTreehash(struct QuadTree *node, float x, float y)
@@ -83,8 +101,8 @@ void QuadTreeClear(struct QuadTree *node)
 
 bool QuadTreeAbsInclude(struct QuadTree *node, const Rect2D* boundary)
 {
-    return !(boundary->C.x < node->rect.A.x ||
-             boundary->C.y < node->rect.A.y ||
-             boundary->A.x > node->rect.C.x ||
-             boundary->A.y > node->rect.C.y);
+    return !(boundary->A.x > node->rect.C.x ||
+             boundary->A.y > node->rect.C.y ||
+             boundary->C.x < node->rect.A.x ||
+             boundary->C.y < node->rect.A.y);
 }
