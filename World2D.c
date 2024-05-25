@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <time.h>
 
-World2D *CreateWorld(float g, unsigned char w, unsigned char h)
+World2D *CreateWorld(float g, float w, float h)
 {
     srand((unsigned int)time(NULL));
     World2D* world = (World2D*)malloc(sizeof(World2D));

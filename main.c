@@ -18,9 +18,8 @@ void printArr(void *data)
 int main()
 {
     World2D *world = CreateWorld(9.8f, 5, 3);
-
     Circle* circle = CreateCircle((Vec2) {0.0f, 0.0f}, 0.5f);
-    struct QuadTree* tree = CreateQuadTreeNode(world->w, world->h);
+    struct QuadTree* tree = CreateQuadTreeNode(NULL, world->w, world->h, 0);
 
     for (int k = 0; k < 5; ++k) {
         Body2D body;

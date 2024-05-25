@@ -12,13 +12,13 @@
 typedef struct
 {
     float gravity;
-    unsigned char w;
-    unsigned char h;
+    float w;
+    float h;
     bool* bodyBitset;
     void* bodies[MAX_BODY];
 } World2D;
 
-World2D *CreateWorld(float g, unsigned char w, unsigned char h);
+World2D *CreateWorld(float g, float w, float h);
 void DestroyWorld(World2D* world);
 
 void Update(World2D* world, float deltatime, int totalIterations);

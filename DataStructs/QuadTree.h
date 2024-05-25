@@ -16,11 +16,12 @@ typedef enum
 struct QuadTree
 {
     Rect2D rect; // boundary
+    Vec2 sizeOfRect;
     Array1D* objects; // list of objects
     struct QuadTree* nodes[NodeLimit]; // list of nodes
 };
 
-struct QuadTree* CreateQuadTreeNode(float width, float height);
+struct QuadTree* CreateQuadTreeNode(const struct QuadTree* parent, float width, float height, int index);
 int QuadTreehash(struct QuadTree* node, float x, float y); // get cell index
 void QuadtreeInsert(struct QuadTree* node, void* obj, const Rect2D* objBoundary);
 void QuadTreeClear(struct QuadTree* node);
