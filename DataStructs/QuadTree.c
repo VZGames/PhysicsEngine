@@ -88,6 +88,6 @@ void QuadTreeClear(struct QuadTree *node)
 
 bool QuadTreeAbsInclude(struct QuadTree *node, const Rect2D* boundary)
 {
-    return (boundary->A.x >= node->rect.A.x && boundary->C.x <= node->rect.C.x
-            && boundary->A.y >= node->rect.A.y && boundary->C.y <= node->rect.C.y);
+    return (boundary->A.x >= node->rect.A.x && boundary->C.x <= node->rect.C.x)
+           || (boundary->A.y >= node->rect.A.y && boundary->C.y <= node->rect.C.y);
 }
