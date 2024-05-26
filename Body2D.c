@@ -52,8 +52,8 @@ Shape2D *BodyCreateShape(Body2D* target, ShapeType type, void* define)
         break;
     }
 
-    target->shape.box.x = target->position.x;
-    target->shape.box.y = target->position.y;
+    target->shape.box.x += target->position.x;
+    target->shape.box.y += target->position.y;
 
     target->shape.define = define;
     target->shape.type = type;

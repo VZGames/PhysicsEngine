@@ -84,8 +84,8 @@ void GetCircleBoundary(Rect2D *rect, Circle *circle)
 {
     rect->x = circle->center.x - circle->radius;
     rect->y = circle->center.y - circle->radius;
-    rect->width = circle->center.x + circle->radius;
-    rect->height = circle->center.y + circle->radius;
+    rect->width = circle->radius * 2.0f;
+    rect->height = circle->radius * 2.0f;
 }
 
 void GetPolygonBoundary(Rect2D *rect, Polygon *polygon)
@@ -116,22 +116,25 @@ void GetPolygonBoundary(Rect2D *rect, Polygon *polygon)
 
     rect->x = minX;
     rect->y = minY;
-    rect->width = maxX;
-    rect->height = maxY;
+    rect->width = maxX - minX;
+    rect->height = maxY - minY;
 }
 
 void GetEllipseBoundary(Rect2D *rect, Ellipse *ellipse)
 {
     rect->x = ellipse->center.x - ellipse->a;
     rect->y = ellipse->center.y - ellipse->b;
-    rect->width = ellipse->center.x + ellipse->a;
-    rect->height = ellipse->center.y + ellipse->b;
+    rect->width = ellipse->a * 2.0f;
+    rect->height = ellipse->b * 2.0f;
 }
 
 void GetCapsuleBoundary(Rect2D *rect, Capsule *capsule)
 {
+    /**
+     * Need fix
+     **/
     rect->x = capsule->center.x - capsule->radius;
     rect->y = capsule->center.y - capsule->height / 2.0f;
-    rect->width = capsule->center.x + capsule->radius;
-    rect->height = capsule->center.y + capsule->height / 2.0f;
+    rect->width = capsule->radius * 2.0f;
+    rect->height = capsule->height + capsule->radius * 2.0f;
 }
