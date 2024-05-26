@@ -19,10 +19,10 @@ struct QuadTree *CreateQuadTreeNode(const struct QuadTree* parent, float width, 
     }
     else
     {
-        node->rect.A.x    =  parent->rect.A.x + (index % 2) * (parent->sizeOfRect.x/2.0f);
-        node->rect.A.y    =  parent->rect.A.y + (index / 2) * parent->sizeOfRect.y/2.0f;
-        node->rect.C.x    =  parent->rect.A.x + (parent->sizeOfRect.x/2.0f) + (parent->sizeOfRect.x/2.0f) * (index % 2);
-        node->rect.C.y    =  parent->rect.A.y + (parent->sizeOfRect.y/2.0f) + (parent->sizeOfRect.y/2.0f) * (index / 2);
+        node->rect.A.x    =  parent->rect.A.x + (index % 2) * width;
+        node->rect.A.y    =  parent->rect.A.y + (index / 2) * height;
+        node->rect.C.x    =  parent->rect.A.x + (width) + (width) * (index % 2);
+        node->rect.C.y    =  parent->rect.A.y + (height) + (height) * (index / 2);
     }
     node->sizeOfRect  =  Vec2Subtract(node->rect.C, node->rect.A);
     node->nodes[WestNorth] = NULL; // TOP-LEFT (1)
@@ -46,7 +46,7 @@ void QuadtreeInsert(struct QuadTree *node, void *obj, const Rect2D* objBoundary)
         for (int i = WestNorth; i < NodeLimit; ++i) {
             if (node->nodes[i] == NULL)
             {
-                node->nodes[i] = CreateQuadTreeNode(node, 0.0f, 0.0f, i);
+                node->nodes[i] = CreateQuadTreeNode(node, node->sizeOfRect.x/2.0f, node->sizeOfRect.y/2.0f, i);
             }
             QuadtreeInsert(node->nodes[i], obj, objBoundary);
         }

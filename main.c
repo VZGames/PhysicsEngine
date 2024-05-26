@@ -17,7 +17,7 @@ void printArr(void *data)
 
 int main()
 {
-    World2D *world = CreateWorld(9.8f, 5, 3);
+    World2D *world = CreateWorld(9.8f, 5.0f, 3.0f);
     Circle* circle = CreateCircle((Vec2) {0.0f, 0.0f}, 0.5f);
     struct QuadTree* tree = CreateQuadTreeNode(NULL, world->w, world->h, 0);
 
