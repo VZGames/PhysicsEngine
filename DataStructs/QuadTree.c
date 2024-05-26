@@ -21,10 +21,10 @@ struct QuadTree *CreateQuadTreeNode(const struct QuadTree* parent, float width, 
     }
     else
     {
-        node->rect.x    =  parent->rect.x + (index % 2) * width;
-        node->rect.y    =  parent->rect.y + (index / 2) * height;
-        node->rect.width    =  parent->rect.x + (width) + (width) * (index % 2);
-        node->rect.height    =  parent->rect.y + (height) + (height) * (index / 2);
+        node->rect.x            =  parent->rect.x + (index % 2) * width;
+        node->rect.y            =  parent->rect.y + (index / 2) * height;
+        node->rect.width        =  (width) + (width) * (index % 2);
+        node->rect.height       =  (height) + (height) * (index / 2);
     }
     node->nodes[WestNorth] = NULL; // TOP-LEFT (1)
     node->nodes[EastNorth] = NULL; // TOP-RIGHT (2)
@@ -58,6 +58,28 @@ void QuadtreeInsert(struct QuadTree *node, void *obj, const Rect2D* objBoundary)
     printf("\n");
 }
 
+void QuadTreeRetrieve(struct QuadTree* node, Array1D* objs, const Rect2D* objBoundary)
+{
+    if (node != NULL)
+    {
+        for (int i = WestNorth; i < NodeLimit; ++i) {
+            if (node->nodes[i] == NULL) continue;
+            if (QuadTreeAbsInclude(node->nodes[i], objBoundary))
+            {
+                QuadTreeRetrieve(node->nodes[i], objs, objBoundary);
+            }
+        }
+        return;
+    }
+
+    if (QuadTreeAbsInclude(node, objBoundary))
+    {
+        for (size_t i = 0; i < Array1DTotalSize(node->objects); ++i) {
+            Array1DPush(objs, Array1DItemAtIndex(node->objects, i));
+        }
+    }
+}
+
 int QuadTreehash(struct QuadTree *node, float x, float y)
 {
     int columns = 2;
@@ -88,6 +110,9 @@ void QuadTreeClear(struct QuadTree *node)
 
 bool QuadTreeAbsInclude(struct QuadTree *node, const Rect2D* boundary)
 {
-    return (boundary->x >= node->rect.x || boundary->x + boundary->width <= node->rect.width)
-           || (boundary->y >= node->rect.y || boundary->y + boundary->height <= node->rect.height);
+    if (node == NULL || boundary == NULL) return false;
+    return !(boundary->x > (node->rect.x + node->rect.width) ||
+            (boundary->x + boundary->width) < node->rect.width) ||
+            (boundary->y > (node->rect.y + node->rect.height)||
+            (boundary->y + boundary->height) < node->rect.height);
 }

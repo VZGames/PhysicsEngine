@@ -19,9 +19,11 @@ int main()
 {
     World2D *world = CreateWorld(9.8f, 5.0f, 3.0f);
     Circle* circle = CreateCircle((Vec2) {0.0f, 0.0f}, 0.5f);
+    Array1D* array = CreateArray1D();
+    Array1D* objs  = CreateArray1D();
     struct QuadTree* tree = CreateQuadTreeNode(NULL, world->w, world->h, 0);
 
-    for (int k = 0; k < 5; ++k) {
+    for (int k = 0; k < 3; ++k) {
         Body2D body;
         body.type = STATIC_TYPE;
         body.density = 1.0f;
@@ -36,10 +38,16 @@ int main()
         Body2D *obj = CreateBody(world, &body);
         BodyCreateShape(obj, CIRCLE, circle);
         
+        Array1DPush(objs, obj);
         QuadtreeInsert(tree, obj, &obj->shape.box);
         printf("+++++++++++++++++++++++++\n");
     }
 
+    Body2D* obj = (Body2D*)Array1DItemAtIndex(objs, 0);
+    QuadTreeRetrieve(tree, array, &obj->shape.box);
+
+    printf("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
+    Array1DTraverse(array, printArr);
 
     QuadTreeClear(tree);
     DestroyWorld(world);

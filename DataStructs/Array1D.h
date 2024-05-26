@@ -10,6 +10,7 @@ typedef struct
 } Array1D;
 
 Array1D* CreateArray1D();
+void *Array1DItemAtIndex(Array1D* arr, size_t index);
 void Array1DPush(Array1D* arr, void* el);
 void Array1DInsert(Array1D* arr, void* el, size_t index);
 void Array1DDelete(Array1D* arr, size_t index);

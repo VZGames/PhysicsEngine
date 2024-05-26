@@ -73,3 +73,12 @@ void Array1DClear(Array1D *arr)
         arr = NULL;
     }
 }
+
+void *Array1DItemAtIndex(Array1D *arr, size_t index)
+{
+    if (index < arr->size)
+    {
+        return arr->array[index];
+    }
+    return NULL;
+}
