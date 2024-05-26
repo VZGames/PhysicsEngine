@@ -82,10 +82,10 @@ float GetShapeArea(const Shape2D *shape)
 
 void GetCircleBoundary(Rect2D *rect, Circle *circle)
 {
-    rect->A.x = circle->center.x - circle->radius;
-    rect->A.y = circle->center.y - circle->radius;
-    rect->C.x = circle->center.x + circle->radius;
-    rect->C.y = circle->center.y + circle->radius;
+    rect->x = circle->center.x - circle->radius;
+    rect->y = circle->center.y - circle->radius;
+    rect->width = circle->center.x + circle->radius;
+    rect->height = circle->center.y + circle->radius;
 }
 
 void GetPolygonBoundary(Rect2D *rect, Polygon *polygon)
@@ -114,24 +114,24 @@ void GetPolygonBoundary(Rect2D *rect, Polygon *polygon)
         }
     }
 
-    rect->A.x = minX;
-    rect->A.y = minY;
-    rect->C.x = maxX;
-    rect->C.y = maxY;
+    rect->x = minX;
+    rect->y = minY;
+    rect->width = maxX;
+    rect->height = maxY;
 }
 
 void GetEllipseBoundary(Rect2D *rect, Ellipse *ellipse)
 {
-    rect->A.x = ellipse->center.x - ellipse->a;
-    rect->A.y = ellipse->center.y - ellipse->b;
-    rect->C.x = ellipse->center.x + ellipse->a;
-    rect->C.y = ellipse->center.y + ellipse->b;
+    rect->x = ellipse->center.x - ellipse->a;
+    rect->y = ellipse->center.y - ellipse->b;
+    rect->width = ellipse->center.x + ellipse->a;
+    rect->height = ellipse->center.y + ellipse->b;
 }
 
 void GetCapsuleBoundary(Rect2D *rect, Capsule *capsule)
 {
-    rect->A.x = capsule->center.x - capsule->radius;
-    rect->A.y = capsule->center.y - capsule->height / 2.0f;
-    rect->C.x = capsule->center.x + capsule->radius;
-    rect->C.y = capsule->center.y + capsule->height / 2.0f;
+    rect->x = capsule->center.x - capsule->radius;
+    rect->y = capsule->center.y - capsule->height / 2.0f;
+    rect->width = capsule->center.x + capsule->radius;
+    rect->height = capsule->center.y + capsule->height / 2.0f;
 }

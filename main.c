@@ -35,8 +35,8 @@ int main()
 
         Body2D *obj = CreateBody(world, &body);
         BodyCreateShape(obj, CIRCLE, circle);
-
-        QuadtreeInsert(tree, obj, &obj->shape.boundary);
+        
+        QuadtreeInsert(tree, obj, &obj->shape.box);
         printf("+++++++++++++++++++++++++\n");
     }
 

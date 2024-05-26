@@ -37,25 +37,23 @@ Shape2D *BodyCreateShape(Body2D* target, ShapeType type, void* define)
 {
     switch (type) {
     case CIRCLE:
-        GetCircleBoundary(&target->shape.boundary, (Circle*)define);
+        GetCircleBoundary(&target->shape.box, (Circle*)define);
         break;
     case POLYGON:
-        GetPolygonBoundary(&target->shape.boundary, (Polygon*)define);
+        GetPolygonBoundary(&target->shape.box, (Polygon*)define);
         break;
     case ELLIPSE:
-        GetEllipseBoundary(&target->shape.boundary, (Ellipse*)define);
+        GetEllipseBoundary(&target->shape.box, (Ellipse*)define);
         break;
     case CAPSULE:
-        GetCapsuleBoundary(&target->shape.boundary, (Capsule*)define);
+        GetCapsuleBoundary(&target->shape.box, (Capsule*)define);
         break;
     default:
         break;
     }
 
-    target->shape.boundary.A.x = target->position.x;
-    target->shape.boundary.A.y = target->position.y;
-    target->shape.boundary.C.x += target->shape.boundary.A.x;
-    target->shape.boundary.C.y += target->shape.boundary.A.y;
+    target->shape.box.x = target->position.x;
+    target->shape.box.y = target->position.y;
 
     target->shape.define = define;
     target->shape.type = type;

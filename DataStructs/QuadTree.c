@@ -6,7 +6,7 @@
 void PrintObject(void* vobj)
 {
     Body2D* obj = (Body2D*)vobj;
-    printf("Object: %p [%f, %f, %f, %f]\n", vobj, obj->shape.boundary.A.x, obj->shape.boundary.A.y, obj->shape.boundary.C.x, obj->shape.boundary.C.y);
+    printf("Object: %p [%f, %f, %f, %f]\n", vobj, obj->shape.box.x, obj->shape.box.y, obj->shape.box.width, obj->shape.box.height);
 }
 struct QuadTree *CreateQuadTreeNode(const struct QuadTree* parent, float width, float height,  int index)
 {
@@ -14,17 +14,18 @@ struct QuadTree *CreateQuadTreeNode(const struct QuadTree* parent, float width, 
     node->objects = CreateArray1D();
     if (parent == NULL) // current node is root, have not parent (NULL)
     {
-        node->rect.A = (Vec2) {0,0};
-        node->rect.C = (Vec2) {width, height};
+        node->rect.x = 0;
+        node->rect.y = 0;
+        node->rect.width = width;
+        node->rect.height = height;
     }
     else
     {
-        node->rect.A.x    =  parent->rect.A.x + (index % 2) * width;
-        node->rect.A.y    =  parent->rect.A.y + (index / 2) * height;
-        node->rect.C.x    =  parent->rect.A.x + (width) + (width) * (index % 2);
-        node->rect.C.y    =  parent->rect.A.y + (height) + (height) * (index / 2);
+        node->rect.x    =  parent->rect.x + (index % 2) * width;
+        node->rect.y    =  parent->rect.y + (index / 2) * height;
+        node->rect.width    =  parent->rect.x + (width) + (width) * (index % 2);
+        node->rect.height    =  parent->rect.y + (height) + (height) * (index / 2);
     }
-    node->sizeOfRect  =  Vec2Subtract(node->rect.C, node->rect.A);
     node->nodes[WestNorth] = NULL; // TOP-LEFT (1)
     node->nodes[EastNorth] = NULL; // TOP-RIGHT (2)
     node->nodes[WestSouth] = NULL; // BOTTOM-LEFT (3)
@@ -46,24 +47,23 @@ void QuadtreeInsert(struct QuadTree *node, void *obj, const Rect2D* objBoundary)
         for (int i = WestNorth; i < NodeLimit; ++i) {
             if (node->nodes[i] == NULL)
             {
-                node->nodes[i] = CreateQuadTreeNode(node, node->sizeOfRect.x/2.0f, node->sizeOfRect.y/2.0f, i);
+                node->nodes[i] = CreateQuadTreeNode(node, node->rect.width / 2.0f, node->rect.height / 2.0f, i);
             }
             QuadtreeInsert(node->nodes[i], obj, objBoundary);
         }
     }
 
-    printf("Boundary [%f %f %f %f] include %llu objects\n", node->rect.A.x, node->rect.A.y, node->rect.C.x, node->rect.C.y, Array1DTotalSize(node->objects));
+    printf("Boundary [%f %f %f %f] include %llu objects\n", node->rect.x, node->rect.y, node->rect.width, node->rect.height, Array1DTotalSize(node->objects));
     Array1DTraverse(node->objects, PrintObject);
     printf("\n");
 }
 
 int QuadTreehash(struct QuadTree *node, float x, float y)
 {
-    Vec2 size = Vec2Subtract(node->rect.C, node->rect.A);
     int columns = 2;
     int rows = 2;
-    int hashX = (int)((x - node->rect.A.x) / (size.x / 2.0f));
-    int hashY = (int)((y - node->rect.A.y) / (size.y / 2.0f));
+    int hashX = (int)((x - node->rect.x) / (node->rect.width / 2.0f));
+    int hashY = (int)((y - node->rect.y) / (node->rect.height / 2.0f));
     if(hashX < 0) hashX = 0;
     if(hashX > columns) hashX = columns - 1;
     if(hashY < 0) hashY = 0;
@@ -88,6 +88,6 @@ void QuadTreeClear(struct QuadTree *node)
 
 bool QuadTreeAbsInclude(struct QuadTree *node, const Rect2D* boundary)
 {
-    return (boundary->A.x >= node->rect.A.x && boundary->C.x <= node->rect.C.x)
-           || (boundary->A.y >= node->rect.A.y && boundary->C.y <= node->rect.C.y);
+    return (boundary->x >= node->rect.x || boundary->x + boundary->width <= node->rect.width)
+           || (boundary->y >= node->rect.y || boundary->y + boundary->height <= node->rect.height);
 }

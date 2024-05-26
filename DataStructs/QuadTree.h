@@ -1,6 +1,7 @@
 #ifndef QUADTREE_H
 #define QUADTREE_H
 
+#include <stdbool.h>
 #include "Math/Rect2D.h"
 #include "Array1D.h"
 
@@ -16,7 +17,6 @@ typedef enum
 struct QuadTree
 {
     Rect2D rect; // boundary
-    Vec2 sizeOfRect;
     Array1D* objects; // list of objects
     struct QuadTree* nodes[NodeLimit]; // list of nodes
 };

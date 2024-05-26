@@ -18,7 +18,7 @@ typedef enum
 typedef struct
 {
     ShapeType type;
-    Rect2D boundary;
+    Rect2D box;
     void *define;
 } Shape2D;
 
