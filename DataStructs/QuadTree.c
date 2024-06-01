@@ -23,8 +23,8 @@ struct QuadTree *CreateQuadTreeNode(const struct QuadTree* parent, float width, 
     {
         node->rect.x            =  parent->rect.x + (index % 2) * width;
         node->rect.y            =  parent->rect.y + (index / 2) * height;
-        node->rect.width        =  (width) + (width) * (index % 2);
-        node->rect.height       =  (height) + (height) * (index / 2);
+        node->rect.width        =  width;
+        node->rect.height       =  height;
     }
     node->nodes[WestNorth] = NULL; // TOP-LEFT (1)
     node->nodes[EastNorth] = NULL; // TOP-RIGHT (2)
@@ -53,9 +53,6 @@ void QuadtreeInsert(struct QuadTree *node, void *obj, const Rect2D* objBoundary)
         }
     }
 
-    printf("Boundary [%f %f %f %f] include %llu objects\n", node->rect.x, node->rect.y, node->rect.width, node->rect.height, Array1DTotalSize(node->objects));
-    Array1DTraverse(node->objects, PrintObject);
-    printf("\n");
 }
 
 void QuadTreeRetrieve(struct QuadTree* node, Array1D* objs, const Rect2D* objBoundary)
@@ -68,10 +65,15 @@ void QuadTreeRetrieve(struct QuadTree* node, Array1D* objs, const Rect2D* objBou
             {
                 QuadTreeRetrieve(node->nodes[i], objs, objBoundary);
             }
+            // printf("Boundary [%f %f %f %f] include %llu objects\n", node->nodes[i]->rect.x, node->nodes[i]->rect.y, node->nodes[i]->rect.width, node->nodes[i]->rect.height, Array1DTotalSize(node->nodes[i]->objects));
+            // Array1DTraverse(node->nodes[i]->objects, PrintObject);
+            // printf("\n");
         }
+        printf("Boundary [%f %f %f %f] include %llu objects\n", node->rect.x, node->rect.y, node->rect.width, node->rect.height, Array1DTotalSize(node->objects));
+        Array1DTraverse(node->objects, PrintObject);
+        printf("\n");
         return;
     }
-
     if (QuadTreeAbsInclude(node, objBoundary))
     {
         for (size_t i = 0; i < Array1DTotalSize(node->objects); ++i) {
@@ -111,8 +113,8 @@ void QuadTreeClear(struct QuadTree *node)
 bool QuadTreeAbsInclude(struct QuadTree *node, const Rect2D* boundary)
 {
     if (node == NULL || boundary == NULL) return false;
-    return !(boundary->x > (node->rect.x + node->rect.width) ||
-            (boundary->x + boundary->width) < node->rect.width) ||
-            (boundary->y > (node->rect.y + node->rect.height)||
-            (boundary->y + boundary->height) < node->rect.height);
+    return ((boundary->x >= (node->rect.x - node->rect.width)) &&
+            (boundary->x < (node->rect.x + node->rect.width)) &&
+            (boundary->y >= (node->rect.y - node->rect.height))&&
+            (boundary->y < (node->rect.y +node->rect.height)));
 }
