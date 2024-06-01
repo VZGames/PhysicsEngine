@@ -37,13 +37,9 @@ struct QuadTree *CreateQuadTreeNode(const struct QuadTree* parent, float width, 
 void QuadtreeInsert(struct QuadTree *node, void *obj, const Rect2D* objBoundary)
 {
     if (node == NULL) return;
-    if (QuadTreeAbsInclude(node, objBoundary))
+    if (QuadTreeAbsInclude(node, objBoundary) && Array1DTotalSize(node->objects) < 4 )
     {
         Array1DPush(node->objects, obj);
-    }
-
-    if (Array1DTotalSize(node->objects) > 1)
-    {
         for (int i = WestNorth; i < NodeLimit; ++i) {
             if (node->nodes[i] == NULL)
             {
@@ -52,6 +48,7 @@ void QuadtreeInsert(struct QuadTree *node, void *obj, const Rect2D* objBoundary)
             QuadtreeInsert(node->nodes[i], obj, objBoundary);
         }
     }
+
 
 }
 
@@ -65,9 +62,6 @@ void QuadTreeRetrieve(struct QuadTree* node, Array1D* objs, const Rect2D* objBou
             {
                 QuadTreeRetrieve(node->nodes[i], objs, objBoundary);
             }
-            // printf("Boundary [%f %f %f %f] include %llu objects\n", node->nodes[i]->rect.x, node->nodes[i]->rect.y, node->nodes[i]->rect.width, node->nodes[i]->rect.height, Array1DTotalSize(node->nodes[i]->objects));
-            // Array1DTraverse(node->nodes[i]->objects, PrintObject);
-            // printf("\n");
         }
         printf("Boundary [%f %f %f %f] include %llu objects\n", node->rect.x, node->rect.y, node->rect.width, node->rect.height, Array1DTotalSize(node->objects));
         Array1DTraverse(node->objects, PrintObject);
