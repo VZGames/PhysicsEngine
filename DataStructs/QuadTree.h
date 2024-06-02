@@ -4,7 +4,7 @@
 #include <stdbool.h>
 #include "Math/Rect2D.h"
 #include "Array1D.h"
-
+#define NODE_CAPACITY 4
 typedef enum
 {
     WestNorth,// TOP-LEFT (1)
@@ -24,8 +24,8 @@ struct QuadTree
 struct QuadTree* CreateQuadTreeNode(const struct QuadTree* parent, float width, float height, int index);
 int QuadTreehash(struct QuadTree* node, float x, float y); // get cell index
 void QuadtreeInsert(struct QuadTree* node, void* obj, const Rect2D* objBoundary);
-void QuadTreeRetrieve(struct QuadTree* node, Array1D* objs, const Rect2D* objBoundary);
+void QuadTreePrint(struct QuadTree* node);
 void QuadTreeClear(struct QuadTree* node);
-bool QuadTreeAbsInclude(struct QuadTree* node, const Rect2D* boundary);
+bool QuadTreeOverlap(struct QuadTree* node, const Rect2D* boundary);
 
 #endif // QUADTREE_H

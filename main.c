@@ -12,7 +12,8 @@ void printList(void *data)
 
 void printArr(void *data)
 {
-    printf("%d\n", *(int*)data);
+    Body2D* obj = (Body2D*)data;
+    printf("Object: %p [%f, %f, %f, %f]\n", obj, obj->shape.box.x, obj->shape.box.y, obj->shape.box.width, obj->shape.box.height);
 }
 
 int main()
@@ -40,14 +41,13 @@ int main()
         
         Array1DPush(objs, obj);
         QuadtreeInsert(tree, obj, &obj->shape.box);
-        printf("+++++++++++++++++++++++++\n");
     }
 
-    Body2D* obj = (Body2D*)Array1DItemAtIndex(objs, 0);
-    QuadTreeRetrieve(tree, array, &obj->shape.box);
-
-    printf("XXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n");
-    Array1DTraverse(array, printArr);
+    QuadTreePrint(tree);
+//    Body2D* obj = (Body2D*)Array1DItemAtIndex(objs, 0);
+//    QuadTreeRetrieve(tree, array, &obj->shape.box);
+//    printf("%llu\n", Array1DTotalSize(array));
+//    Array1DTraverse(array, printArr);
 
     QuadTreeClear(tree);
     DestroyWorld(world);

@@ -37,13 +37,16 @@ struct QuadTree *CreateQuadTreeNode(const struct QuadTree* parent, float width, 
 void QuadtreeInsert(struct QuadTree *node, void *obj, const Rect2D* objBoundary)
 {
     if (node == NULL) return;
-    if (!QuadTreeAbsInclude(node, objBoundary))
+    if (!QuadTreeOverlap(node, objBoundary))
     {
         return;
     }
-    if (Array1DTotalSize(node->objects) < 3) {
+    if (Array1DTotalSize(node->objects) < NODE_CAPACITY)
+    {
         Array1DPush(node->objects, obj);
-    } else{
+    }
+    else
+    {
         for (int i = WestNorth; i < NodeLimit; ++i) {
             if (node->nodes[i] == NULL)
             {
@@ -55,29 +58,6 @@ void QuadtreeInsert(struct QuadTree *node, void *obj, const Rect2D* objBoundary)
 
 }
 
-void QuadTreeRetrieve(struct QuadTree* node, Array1D* objs, const Rect2D* objBoundary)
-{
-    if (node != NULL)
-    {
-        for (int i = WestNorth; i < NodeLimit; ++i) {
-            if (node->nodes[i] == NULL) continue;
-            if (QuadTreeAbsInclude(node->nodes[i], objBoundary))
-            {
-                QuadTreeRetrieve(node->nodes[i], objs, objBoundary);
-            }
-        }
-        printf("Boundary [%f %f %f %f] include %llu objects\n", node->rect.x, node->rect.y, node->rect.width, node->rect.height, Array1DTotalSize(node->objects));
-        Array1DTraverse(node->objects, PrintObject);
-        printf("\n");
-        return;
-    }
-    if (QuadTreeAbsInclude(node, objBoundary))
-    {
-        for (size_t i = 0; i < Array1DTotalSize(node->objects); ++i) {
-            Array1DPush(objs, Array1DItemAtIndex(node->objects, i));
-        }
-    }
-}
 
 int QuadTreehash(struct QuadTree *node, float x, float y)
 {
@@ -107,10 +87,23 @@ void QuadTreeClear(struct QuadTree *node)
     }
 }
 
-bool QuadTreeAbsInclude(struct QuadTree *node, const Rect2D* boundary)
+bool QuadTreeOverlap(struct QuadTree *node, const Rect2D* boundary)
 {
     if (node == NULL || boundary == NULL) return false;
     if ((boundary->x > node->rect.x + node->rect.width) || (boundary->x + boundary->width < node->rect.x)) return false;
     if ((boundary->y > node->rect.y + node->rect.height) || (boundary->y + boundary->height < node->rect.y)) return false;
     return true;
+}
+
+void QuadTreePrint(struct QuadTree *node)
+{
+    if (node == NULL) return;
+    for (int i = WestNorth; i < NodeLimit; i++)
+    {
+        QuadTreePrint(node->nodes[i]);
+    }
+    printf("Node:%p,(%f,%f,%f,%f),Count:%llu\n",node,node->rect.x,node->rect.y,node->rect.width,node->rect.height,node->objects->size);
+
+    Array1DTraverse(node->objects, PrintObject);
+
 }
