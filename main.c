@@ -23,7 +23,7 @@ int main()
     Array1D* objs  = CreateArray1D();
     struct QuadTree* tree = CreateQuadTreeNode(NULL, world->w, world->h, 0);
 
-    for (int k = 0; k < 5; ++k) {
+    for (int k = 0; k < 10; ++k) {
         Body2D body;
         body.type = STATIC_TYPE;
         body.density = 1.0f;
