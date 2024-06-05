@@ -103,7 +103,10 @@ void QuadTreePrint(struct QuadTree *node)
         QuadTreePrint(node->nodes[i]);
     }
     printf("Node:%p,(%f,%f,%f,%f),Count:%llu\n",node,node->rect.x,node->rect.y,node->rect.width,node->rect.height,node->objects->size);
-
     Array1DTraverse(node->objects, PrintObject);
+}
 
+void QuadTreeSearch(struct QuadTree* node, Array1D *outs, const Rect2D *objBoundary)
+{
+    if (node == NULL) return;
 }

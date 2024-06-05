@@ -43,6 +43,7 @@ int main()
         QuadtreeInsert(tree, obj, &obj->shape.box);
     }
 
+
     QuadTreePrint(tree);
 //    Body2D* obj = (Body2D*)Array1DItemAtIndex(objs, 0);
 //    QuadTreeRetrieve(tree, array, &obj->shape.box);
