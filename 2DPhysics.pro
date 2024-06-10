@@ -5,6 +5,7 @@ CONFIG -= qt
 
 SOURCES += \
         Body2D.c \
+        Collision.c \
         DataStructs/Array1D.c \
         DataStructs/Array2D.c \
         DataStructs/List.c \
@@ -17,6 +18,7 @@ DISTFILES += \
     README.md
 
 HEADERS += \
+    Collision.h \
     Math/Rect2D.h \
     Math/Shape2D.h \
     Math/Transform2D.h \
