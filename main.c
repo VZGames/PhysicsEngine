@@ -12,8 +12,14 @@ void printList(void *data)
 
 void printArr(void *data)
 {
-    Body2D* obj = (Body2D*)data;
-    printf("Object: %p [%f, %f, %f, %f]\n", obj, obj->shape.box.x, obj->shape.box.y, obj->shape.box.width, obj->shape.box.height);
+    // Body2D* obj = (Body2D*)data;
+    // printf("Object: %p [%f, %f, %f, %f]\n", obj, obj->shape.box.x, obj->shape.box.y, obj->shape.box.width, obj->shape.box.height);
+    struct QuadTree* node = (struct QuadTree*)data;
+    printf("Node: %p\n", data);
+    for (int i = 0; i < node->objects->size; ++i) {
+        Body2D* obj = (Body2D*)Array1DItemAtIndex(node->objects, i);
+        printf("Object: %p [%f, %f, %f, %f]\n", obj, obj->shape.box.x, obj->shape.box.y, obj->shape.box.width, obj->shape.box.height);
+    }
 }
 
 int main()
@@ -45,10 +51,10 @@ int main()
 
 
     QuadTreePrint(tree);
-//    Body2D* obj = (Body2D*)Array1DItemAtIndex(objs, 0);
-//    QuadTreeRetrieve(tree, array, &obj->shape.box);
-//    printf("%llu\n", Array1DTotalSize(array));
-//    Array1DTraverse(array, printArr);
+   Body2D* obj = (Body2D*)Array1DItemAtIndex(objs, 0);
+   QuadTreeSearch(tree, array, &obj->shape.box);
+   printf("%llu\n", Array1DTotalSize(array));
+   Array1DTraverse(array, printArr);
 
     QuadTreeClear(tree);
     DestroyWorld(world);

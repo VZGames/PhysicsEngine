@@ -109,4 +109,27 @@ void QuadTreePrint(struct QuadTree *node)
 void QuadTreeSearch(struct QuadTree* node, Array1D *outs, const Rect2D *objBoundary)
 {
     if (node == NULL) return;
+    if (node->objects == NULL) return;
+    // If is a leaf node
+    bool is_leaf_node = true;
+    for (int i = WestNorth; i < NodeLimit; i++)
+    {
+        if (node->nodes[i] != NULL)
+        {
+            is_leaf_node = false;
+            break;
+        }
+    }
+
+    if (is_leaf_node && node->objects->size > 1)
+    {
+        Array1DPush(outs, node);
+    }
+    else
+    {
+        for (int i = WestNorth; i < NodeLimit; i++)
+        {
+            QuadTreeSearch(node->nodes[i], outs, objBoundary);
+        }
+    }
 }
