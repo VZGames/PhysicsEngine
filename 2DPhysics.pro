@@ -15,6 +15,9 @@ SOURCES += \
         main.c
 
 DISTFILES += \
+    CMakeLists \
+    DataStructs/CMakeLists \
+    Math/CMakeLists \
     README.md
 
 HEADERS += \
