@@ -1,13 +1,13 @@
 #include "QuadTree.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <Body2D.h>
+/* #include <Body2D.h> */
 
-void PrintObject(void* vobj)
-{
-    Body2D* obj = (Body2D*)vobj;
-    printf("Object: %p [%f, %f, %f, %f]\n", vobj, obj->shape.box.x, obj->shape.box.y, obj->shape.box.width, obj->shape.box.height);
-}
+/* void PrintObject(void* vobj) */
+/* { */
+/*     Body2D* obj = (Body2D*)vobj; */
+/*     printf("Object: %p [%f, %f, %f, %f]\n", vobj, obj->shape.box.x, obj->shape.box.y, obj->shape.box.width, obj->shape.box.height); */
+/* } */
 struct QuadTree *CreateQuadTreeNode(const struct QuadTree* parent, float width, float height,  int index)
 {
     struct QuadTree* node = (struct QuadTree*)malloc(sizeof(struct QuadTree));
@@ -102,8 +102,8 @@ void QuadTreePrint(struct QuadTree *node)
     {
         QuadTreePrint(node->nodes[i]);
     }
-    printf("Node:%p,(%f,%f,%f,%f),Count:%llu\n",node,node->rect.x,node->rect.y,node->rect.width,node->rect.height,node->objects->size);
-    Array1DTraverse(node->objects, PrintObject);
+    /* printf("Node:%p,(%f,%f,%f,%f),Count:%llu\n",node,node->rect.x,node->rect.y,node->rect.width,node->rect.height,node->objects->size); */
+    /* Array1DTraverse(node->objects, PrintObject); */
 }
 
 void QuadTreeSearch(struct QuadTree* node, Array1D *outs, const Rect2D *objBoundary)

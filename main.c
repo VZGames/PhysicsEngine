@@ -51,10 +51,10 @@ int main()
 
 
     QuadTreePrint(tree);
-   Body2D* obj = (Body2D*)Array1DItemAtIndex(objs, 0);
-   QuadTreeSearch(tree, array, &obj->shape.box);
-   printf("%llu\n", Array1DTotalSize(array));
-   Array1DTraverse(array, printArr);
+    Body2D* obj = (Body2D*)Array1DItemAtIndex(objs, 0);
+    QuadTreeSearch(tree, array, &obj->shape.box);
+    printf("%lu\n", Array1DTotalSize(array));
+    Array1DTraverse(array, printArr);
 
     QuadTreeClear(tree);
     DestroyWorld(world);

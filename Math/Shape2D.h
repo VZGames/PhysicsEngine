@@ -2,6 +2,7 @@
 #define SHAPE2D_H
 
 #include <stdint.h>
+#include <stddef.h>
 #include "Vector2D.h"
 #include "Rect2D.h"
 
