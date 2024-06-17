@@ -2,7 +2,7 @@
 #define QUADTREE_H
 
 #include <stdbool.h>
-#include "Rect2D.h"
+#include "Math/Rect2D.h"
 #include "Array1D.h"
 #define NODE_CAPACITY 4
 typedef enum
